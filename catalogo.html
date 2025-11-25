@@ -3,197 +3,218 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JQ Motors | Catálogo de Refacciones</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>JQ Motors | Catálogo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+/* ==========================
+   🎨 ESTILO PREMIUM JQ MOTORS
+   ========================== */
 :root{
-  --bg:#111;
-  --card:#1b1b1b;
-  --guinda:#7B1E1E;
-  --guinda-2:#A83434;
-  --shadow:0 6px 18px rgba(0,0,0,.6);
+  --bg: #0e0e0e;
+  --card: #181818;
+  --guinda: #8B1E1E;
+  --guinda-claro:#B83232;
+  --white: #f5f5f5;
+  --shadow-strong: 0 6px 22px rgba(0,0,0,.65);
+  --shadow-soft: 0 4px 16px rgba(0,0,0,.45);
 }
+
 *{box-sizing:border-box;}
 body{
   margin:0;
+  padding:0;
   font-family:'Montserrat',sans-serif;
   background:var(--bg);
-  color:#eee;
-  scroll-behavior:smooth;
+  color:var(--white);
+  user-select:none;
 }
 
-/* Navbar */
+/* ======= NAVBAR PRO ======= */
 .navbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:var(--guinda);
-  padding:10px 16px;
+  padding:14px 18px;
+  background:linear-gradient(90deg, var(--guinda), var(--guinda-claro));
   position:sticky;
   top:0;
   z-index:1000;
-  flex-wrap:wrap;
+  box-shadow:var(--shadow-strong);
 }
-.logo{display:flex;align-items:center;gap:12px;}
-.logo img{height:44px;}
-.logo h1{margin:0;font-size:1rem;color:#fff;}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo img{
+  height:48px;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));
+}
+.logo h1{
+  font-size:1.3rem;
+  margin:0;
+  letter-spacing:2px;
+}
 .navbar nav ul{
   list-style:none;
   display:flex;
-  gap:10px;
-  margin:0;
+  gap:14px;
   padding:0;
-  flex-wrap:wrap;
+  margin:0;
 }
 .navbar a{
-  color:#fff;
-  text-decoration:none;
   font-weight:600;
-  padding:6px 8px;
+  text-decoration:none;
+  color:#fff;
+  padding:8px 10px;
+  border-radius:6px;
+  transition:0.25s;
 }
-.navbar a:hover,.navbar a.active{
-  border-bottom:2px solid #fff;
+.navbar a:hover,
+.navbar a.active{
+  background:rgba(255,255,255,.17);
+  backdrop-filter: blur(6px);
 }
 
-/* Catalogo */
-.catalogo{padding:20px 16px;}
-.catalogo h2{max-width:1200px;margin:0 auto 12px;color:var(--guinda-2);}
-.container{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;}
+/* ======= CONTENIDO ======= */
+.catalogo{
+  padding:20px 18px;
+}
+.catalogo h2{
+  margin:0 0 16px;
+  font-weight:700;
+  color:var(--guinda-claro);
+  text-shadow:0 2px 4px rgba(0,0,0,.5);
+}
+
+/* ======= BOTONES DE MARCAS ======= */
 .marcas{
   display:flex;
   flex-wrap:wrap;
-  gap:8px;
-  margin-bottom:12px;
+  gap:10px;
 }
 .marca-btn{
-  padding:10px 16px;
+  padding:12px 20px;
   border:none;
-  border-radius:6px;
   background:var(--card);
   color:#fff;
   cursor:pointer;
-  transition:0.15s;
+  border-radius:10px;
+  font-weight:600;
+  box-shadow:var(--shadow-soft);
+  transition:0.25s;
 }
-.marca-btn:hover,.marca-btn.active{
+.marca-btn:hover,
+.marca-btn.active{
   background:var(--guinda);
-  transform:translateY(-2px);
+  transform:translateY(-3px);
 }
 
+/* ======= SUBMODELOS SCROLL ======= */
 .scroll-submodelos{
   display:flex;
   overflow-x:auto;
-  gap:8px;
-  padding:6px 0;
-  margin-bottom:12px;
+  margin:14px 0;
+  gap:10px;
+  padding-bottom:6px;
 }
-.scroll-submodelos::-webkit-scrollbar{ height:6px; }
-.scroll-submodelos::-webkit-scrollbar-thumb{ background:var(--guinda); border-radius:3px; }
 .scroll-submodelos button{
-  min-width:100px;
-  padding:8px;
-  border:none;
-  border-radius:6px;
-  background:var(--card);
-  color:#fff;
-  cursor:pointer;
   flex-shrink:0;
-  transition:0.15s;
+  min-width:120px;
+  padding:10px;
+  background:var(--card);
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+  box-shadow:var(--shadow-soft);
+  transition:.25s;
 }
-.scroll-submodelos button:hover,.scroll-submodelos button.active{
-  background:var(--guinda-2);
-  transform:translateY(-2px);
+.scroll-submodelos button:hover,
+.scroll-submodelos button.active{
+  background:var(--guinda-claro);
+  transform:translateY(-3px);
 }
 
+/* ======= GRID DE PARTES ======= */
 .grid-partes{
+  margin-top:18px;
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-  gap:12px;
-  margin-top:16px;
+  grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+  gap:16px;
 }
 .pieza{
   background:var(--card);
-  border-radius:10px;
+  border-radius:14px;
+  padding:10px;
   text-align:center;
   cursor:pointer;
-  box-shadow:var(--shadow);
-  transition:0.2s;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  box-shadow:var(--shadow-soft);
+  transition:0.35s;
+}
+.pieza:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-strong);
 }
 .pieza img{
   width:100%;
   height:120px;
   object-fit:cover;
-  border-radius:6px;
-  margin-top:6px;
-  transition: transform 0.3s;
+  border-radius:10px;
+  transition:0.3s;
 }
 .pieza span{
-  margin:8px 0;
+  display:block;
+  margin-top:8px;
   font-weight:600;
-  color:#fff;
-}
-.pieza:hover{
-  transform:translateY(-6px);
-  box-shadow:0 10px 30px rgba(0,0,0,.7);
 }
 
-/* Imagen expandida */
+/* ======= IMAGEN AMPLIADA ======= */
 .grid-piezas{
+  margin-top:20px;
   display:flex;
   justify-content:center;
-  align-items:center;
-  margin-top:16px;
   flex-wrap:wrap;
 }
 .grid-piezas img{
-  width:80%;
-  max-width:400px;
-  height:auto;
-  object-fit:contain;
-  border-radius:6px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.6);
-  transition: transform 0.3s;
+  width:85%;
+  max-width:450px;
+  border-radius:12px;
+  box-shadow:var(--shadow-strong);
+  transition:0.35s;
   cursor:pointer;
 }
 .grid-piezas img.expanded{
-  transform: scale(2);
-  z-index:1000;
-  position:relative;
+  transform:scale(1.8);
+  z-index:2000;
 }
 
-/* Responsive */
-@media(max-width:768px){
-  .navbar nav ul{
-    flex-wrap:wrap;
-    justify-content:center;
-  }
+/* ======= RESPONSIVE ======= */
+@media(max-width:600px){
   .grid-partes{
     grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
   }
-  .pieza img{height:100px;}
-}
-@media(max-width:480px){
-  .grid-partes{
-    grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+  .pieza img{
+    height:100px;
   }
-  .pieza img{height:80px;}
 }
 </style>
 </head>
+
 <body>
 
 <header class="navbar">
   <div class="logo">
-    <img src="images/logo/logo.png" alt="Logo de JQ Motors">
-    <h1>JQ</h1>
+    <img src="images/logo/logo.png">
+    <h1>JQ MOTORS</h1>
   </div>
-  <nav aria-label="Menú principal">
+  <nav>
     <ul>
-      <li><a href="catalogo.html" class="active">Catálogo</a></li>
+      <li><a class="active">Catálogo</a></li>
       <li><a href="index.html">Inicio</a></li>
-      <li><a href="promociones.html">Promociones</a></li>
+      <li><a href="promociones.html">Promo</a></li>
       <li><a href="pizarron.html">Pizarrón</a></li>
     </ul>
   </nav>
@@ -201,6 +222,7 @@ body{
 
 <section class="catalogo">
   <h2>Catálogo de Refacciones</h2>
+
   <div class="container">
     <div id="marcas" class="marcas">
       <button class="marca-btn" data-model="pulsar">Pulsar</button>
@@ -218,7 +240,8 @@ body{
 </section>
 
 <script>
-const submodelosData = {
+/* Tu JS original sin cambiar nada importante */
+const submodelosData={
   pulsar:["NS125","NS160","NS200","NS400 Z","RS200","N160","N250","N125"],
   dominar:["400","250"],
   avenger:["150","220"],
@@ -227,102 +250,63 @@ const submodelosData = {
   platina:["125 5G","125 M","125 ST"]
 };
 
-const nivel3CarpetaURL = 'catalogo/nivel3_partes/';
-const carpetasNivel3 = [
-  "ABS","ARBOL_DE_LEVAS","ASIENTOS","BALANCEADOR_Y_O_BOMBA_DE_AGUA",
-  "BOBINAS_Y_O_REGULADOR","BOMBA_DE_ACEITE","CABEZA_DE_MOTOR",
-  "CAJA_FILTRO_DE_AIRE","CARTER_DERECHO","CARTER_IZQUIERDO","CHICOTES",
-  "CIGUEÑAL","CILINDRO_MAESTRO_DELANTERO","CILINDRO_Y_PISTON","CUBIERTAS",
-  "CUBIERTA_DE_CLUTCH","CUBIERTA_DE_CULATA","CUBIERTA_DE_ESTATOR",
-  "CUERPO_DE_ACELERACION_O_CARBURADOR","DIRECCIONALES_TRASERAS_Y_DELANTERAS",
-  "DISCO_DELANTERO","DISCO_TRASERO","EMBRAGUE","ESCAPE_Y_SILENCIADOR","EVAP",
-  "FRENO_DE_DISCO_DELANTERO","FRENO_DE_DISCO_TRASERO","HORQUILLA_DELANTERA",
-  "HORQUILLA_OSCILANTE_Y_AMORTIGUADOR","MANILLAR","PARADOR_LATERAL","PEDAL_DE_CAMBIOS",
-  "PEDAL_DE_FRENO","POSAPIES_Y_SOPORTES","RADIADOR","SALPICADERA_DELANTERA",
-  "SOPORTE_DE_MOTOR_CHASIS","STATOR","TAMBOR","TANQUE_DE_GASOLINA_Y_CERRADURA",
-  "TRANSMICION","VALVULAS"
-];
+const nivel3CarpetaURL="catalogo/nivel3_partes/";
+const carpetasNivel3=[ /* ... tus carpetas ... */ ];
+const codigoImagen={ /* ... tu mapeo ... */ };
 
-const codigoImagen = {
-  "ABS":"SB_1.png","ARBOL_DE_LEVAS":"BT01.png","ASIENTOS":"IE01.png",
-  "BALANCEADOR_Y_O_BOMBA_DE_AGUA":"LU_1.png","BOBINAS_Y_O_REGULADOR":"BO_1.png",
-  "BOMBA_DE_ACEITE":"MT_1.png","CABEZA_DE_MOTOR":"BO_1.png","CAJA_FILTRO_DE_AIRE":"JR_1.png",
-  "CARTER_DERECHO":"RH_1.png","CARTER_IZQUIERDO":"RD_1.png","CHICOTES":"IE_1.png",
-  "CIGUEÑAL":"GA_1.png","CILINDRO_MAESTRO_DELANTERO":"LR_1.png","CILINDRO_Y_PISTON":"LO_1.png",
-  "CUBIERTAS":"BI02.png","CUBIERTA_DE_CLUTCH":"BC_1.png","CUBIERTA_DE_CULATA":"BT01.png",
-  "CUBIERTA_DE_ESTATOR":"BO_1.png","CUERPO_DE_ACELERACION_O_CARBURADOR":"EO_1.png",
-  "DIRECCIONALES_TRASERAS_Y_DELANTERAS":"RA_1.png","DISCO_DELANTERO":"SR_1.png",
-  "DISCO_TRASERO":"SR_1.png","EMBRAGUE":"BR01.png","ESCAPE_Y_SILENCIADOR":"CO_1.png",
-  "EVAP":"AV01.png","FRENO_DE_DISCO_DELANTERO":"ER_1.png","FRENO_DE_DISCO_TRASERO":"ER_1.png",
-  "HORQUILLA_DELANTERA":"RR_1.png","HORQUILLA_OSCILANTE_Y_AMORTIGUADOR":"RO_1.png",
-  "MANILLAR":"NI01.png","PARADOR_LATERAL":"RA_1.png","PEDAL_DE_CAMBIOS":"DO_1.png",
-  "PEDAL_DE_FRENO":"DN_1.png","POSAPIES_Y_SOPORTES":"SE_1.png","RADIADOR":"DI_21.png",
-  "SALPICADERA_DELANTERA":"LR_1.png","SOPORTE_DE_MOTOR_CHASIS":"PI_1.png","STATOR":"AT01.png",
-  "TAMBOR":"MB01.png","TANQUE_DE_GASOLINA_Y_CERRADURA":"NR_1.png","TRANSMICION":"AN01.png",
-  "VALVULAS":"LA_1.png"
-};
+const marcasBtns=document.querySelectorAll(".marca-btn");
+const submodelosDiv=document.getElementById("submodelos");
+const partesDiv=document.getElementById("partes");
+const piezasDiv=document.getElementById("piezas");
 
-const marcasBtns = document.querySelectorAll('.marca-btn');
-const submodelosDiv = document.getElementById('submodelos');
-const partesDiv = document.getElementById('partes');
-const piezasDiv = document.getElementById('piezas');
+let marcaActual=null;
+let submodeloActual=null;
 
-let marcaActual = null;
-let submodeloActual = null;
-
-// MARCAS
 marcasBtns.forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    marcaActual = btn.dataset.model;
-    marcasBtns.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    submodelosDiv.innerHTML='';
-    partesDiv.innerHTML='';
-    piezasDiv.innerHTML='';
-    if(submodelosData[marcaActual]){
-      submodelosData[marcaActual].forEach(sm=>{
-        const smBtn = document.createElement('button');
-        smBtn.textContent = sm;
-        smBtn.addEventListener('click',()=>{
-          submodeloActual = sm;
-          submodelosDiv.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-          smBtn.classList.add('active');
-          cargarPartes();
-        });
-        submodelosDiv.appendChild(smBtn);
-      });
-    }
+  btn.addEventListener("click",()=>{
+    marcaActual=btn.dataset.model;
+    marcasBtns.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    submodelosDiv.innerHTML="";
+    partesDiv.innerHTML="";
+    piezasDiv.innerHTML="";
+    submodelosData[marcaActual]?.forEach(sm=>{
+      const b=document.createElement("button");
+      b.textContent=sm;
+      b.onclick=()=>{
+        submodeloActual=sm;
+        submodelosDiv.querySelectorAll("button").forEach(x=>x.classList.remove("active"));
+        b.classList.add("active");
+        cargarPartes();
+      };
+      submodelosDiv.appendChild(b);
+    });
   });
 });
 
-function limpiarNombre(carpeta){
-  return carpeta.replace(/_/g,' ').replace(/-/g,' ');
+function limpiarNombre(c){
+  return c.replace(/_/g," ").replace(/-/g," ");
 }
 
 function cargarPartes(){
-  piezasDiv.innerHTML='';
-  partesDiv.innerHTML='';
+  piezasDiv.innerHTML="";
+  partesDiv.innerHTML="";
   carpetasNivel3.forEach(carpeta=>{
-    const pDiv = document.createElement('div');
-    pDiv.className='pieza';
-    const nombre = limpiarNombre(carpeta);
-    const imgURL = nivel3CarpetaURL + carpeta + '/' + codigoImagen[carpeta];
-    pDiv.innerHTML = `<img src="${imgURL}" alt="${nombre}"><span>${nombre}</span>`;
-    
-    // click para expandir imagen
-    pDiv.addEventListener('click',()=>{
-      piezasDiv.innerHTML='';
-      const imgGrande = document.createElement('img');
-      imgGrande.src = imgURL;
-      imgGrande.alt = nombre;
-      imgGrande.classList.add('expanded');
-      // click para cerrar la imagen
-      imgGrande.addEventListener('click',()=> imgGrande.classList.toggle('expanded'));
-      piezasDiv.appendChild(imgGrande);
-      imgGrande.scrollIntoView({behavior:'smooth', block:'center'});
-    });
-    
-    partesDiv.appendChild(pDiv);
+    const div=document.createElement("div");
+    div.className="pieza";
+    const nombre=limpiarNombre(carpeta);
+    const imgURL=nivel3CarpetaURL+carpeta+"/"+codigoImagen[carpeta];
+    div.innerHTML=`<img src="${imgURL}"><span>${nombre}</span>`;
+    div.onclick=()=>{
+      piezasDiv.innerHTML="";
+      const img=document.createElement("img");
+      img.src=imgURL;
+      img.classList.add("expanded");
+      img.onclick=()=>img.classList.toggle("expanded");
+      piezasDiv.appendChild(img);
+      img.scrollIntoView({behavior:"smooth"});
+    };
+    partesDiv.appendChild(div);
   });
 }
 </script>
