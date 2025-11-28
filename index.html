@@ -14,10 +14,9 @@
       --muted:#cfcfcf;
       --guinda:#7B1E1E;
       --guinda-2:#A83434;
-      --azul-marino:#0B1A33; /* NUEVO COLOR */
+      --azul-marino:#0B1A33;
       --shadow:0 6px 18px rgba(0,0,0,.6);
     }
-    
 
     *{box-sizing:border-box}
     body{
@@ -45,7 +44,7 @@
       gap:12px;
     }
     .logo img{
-      height:44px;
+      height:80px;
       display:block;
     }
     .logo h1{
@@ -64,8 +63,8 @@
     .navbar a{
       color:#fff;
       text-decoration:none;
-      font-weight:600;
-      padding:6px 8px;
+      font-weight:1000;
+      padding:10px 18px;
     }
     .navbar a:hover,
     .navbar a.active{
@@ -73,12 +72,14 @@
     }
 
     /* ---------- SLIDER ---------- */
-    .slider{
-      position:relative;
-      width:100%;
-      height:32vh;
-      overflow:hidden;
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 60vh; /* tu tamaño actual */
+      margin-top: 50px; /* BAJA el slider */
+      overflow: hidden;
     }
+
     .slide{
       display:none;
       position:absolute;
@@ -128,13 +129,36 @@
       text-align:center;
       border:4px solid #1d2842;
     }
+
+    /* ---- Imagen expandible ---- */
     .promo-card img{
-      width:50%; /* ajustar según tu imagen */
+      width:50%;
       height:auto;
       object-fit:cover;
       border-radius:10px;
       margin-bottom:12px;
+      transition:transform .25s ease;
+      cursor:pointer;
+      position:relative;
     }
+    .promo-card img.expanded{
+      transform:scale(3.10);
+      z-index:1001;
+      position:relative;
+    }
+
+    /* Fondo oscuro */
+    #overlay-expanded{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.65);
+      z-index:1000;
+    }
+    #overlay-expanded.active{
+      display:block;
+    }
+
     .promo-card h3{
       margin:8px 0;
       color:#fff;
@@ -192,7 +216,7 @@
     /* ---------- WHATSAPP BUTTON ---------- */
     .whatsapp-btn{
       display:inline-block;
-      background-color:#25D366; /* verde WhatsApp */
+      background-color:#25D366;
       color:white;
       padding:10px 16px;
       border-radius:25px;
@@ -214,56 +238,6 @@
       }
     }
 
-    /* ---------- MODAL ---------- */
-    .modal-catalogo{
-      display:none;
-      position:fixed;
-      z-index:2000;
-      left:0;
-      top:0;
-      width:100%;
-      height:100%;
-      overflow:auto;
-      background-color:rgba(0,0,0,.8);
-    }
-    .modal-content{
-      background:#121212;
-      margin:48px auto;
-      padding:18px;
-      border-radius:10px;
-      max-width:900px;
-      color:#eee;
-      box-shadow:var(--shadow);
-    }
-    .modal-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-    .modal-close{
-      cursor:pointer;
-      font-size:1.4rem;
-      font-weight:700;
-    }
-    .modal-productos{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-      gap:15px;
-      margin-top:16px;
-    }
-    .modal-producto{
-      background:#1d1d1d;
-      border-radius:8px;
-      padding:10px;
-      text-align:center;
-    }
-    .modal-producto img{
-      width:100%;
-      height:150px;
-      object-fit:cover;
-      border-radius:5px;
-    }
-
     @media (max-width:900px){
       .slider{height:20vh;}
     }
@@ -272,11 +246,14 @@
 
 <body>
 
+<!-- Overlay para expansión de imágenes -->
+<div id="overlay-expanded"></div>
+
   <!-- ---------- NAVBAR ---------- -->
   <header class="navbar">
     <div class="logo">
       <img src="images/logo/logo.png" alt="Logo" onerror="this.style.display='none'">
-      <h1>JQ</h1>
+      <h1>JQ    RODANDO MOMENTOS  </h1>
     </div>
     <nav aria-label="Menú principal">
       <ul>
@@ -310,32 +287,28 @@
   <h2>Promociones Especiales</h2>
   <div class="promo-container">
 
-    <!-- PROMOCIÓN 1 -->
     <div class="promo-card">
-      <img src="images/promociones/promo1.jpg" alt="Descuento en refacciones">
+      <img src="images/promociones/promo1.jpg" alt="promo 1">
       <h3>Descuento en refacciones</h3>
       <p class="precio">DE $630 A $500 MXN</p>
     </div>
 
-    <!-- PROMOCIÓN 2 -->
     <div class="promo-card">
-      <img src="images/promociones/52DT0468.jpg" alt="colin de ambos lados blanca rs200">
+      <img src="images/promociones/52DT0468.jpg" alt="promo 2">
       <h3>Nuevas promociones</h3>
-      <p class="precio">G</p>
+      <p class="precio">colin RS200 blanco</p>
     </div>
 
-    <!-- PROMOCIÓN 3 -->
     <div class="promo-card">
-      <img src="images/promociones/Portaplaca.jpg" alt="porta placa para n250">
-      <h3>descuento en refaccion</h3>
+      <img src="images/promociones/Portaplaca.jpg" alt="promo 3">
+      <h3>Descuento en refacción</h3>
       <p class="precio">$200 MXN</p>
     </div>
+
   </div>
 </section>
 
-
-
-  <!-- ---------- NUEVO PIZARRÓN ---------- -->
+  <!-- ---------- PIZARRÓN ---------- -->
   <section id="recuerdos" class="pizarron">
     <h2>Pizarrón de Clientes</h2>
     <p style="max-width:1200px;margin:0 auto 12px;color:#eee;font-weight:600">
@@ -343,8 +316,7 @@
     </p>
     <a href="pizarron.html" target="_blank" style="text-decoration:none;color:inherit;">
       <div class="fotos">
-        <!-- AQUÍ AGREGAR IMÁGENES DE PIZARRÓN -->
-        <div class="foto"><img src="images/pizarron/pizarron1.jpg" alt="Foto 2"></div>
+        <div class="foto"><img src="images/pizarron/pizarron1.jpg" alt="Foto 1"></div>
         <div class="foto"><img src="images/pizarron/pizarron2.jpg" alt="Foto 2"></div>
         <div class="foto"><img src="images/pizarron/pizarron3.jpg" alt="Foto 3"></div>
       </div>
@@ -377,6 +349,38 @@
         slides[idx].classList.add('active');
       },4000);
     })();
+
+    // Expansión de imágenes
+    const overlay = document.getElementById("overlay-expanded");
+
+    document.querySelectorAll(".promo-card img").forEach(img => {
+      img.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const expanded = img.classList.toggle("expanded");
+        if (expanded) {
+          overlay.classList.add("active");
+        } else {
+          overlay.classList.remove("active");
+        }
+      });
+    });
+
+    // Cerrar al hacer clic en overlay
+    overlay.addEventListener("click", () => {
+      document.querySelectorAll(".promo-card img.expanded").forEach(img => {
+        img.classList.remove("expanded");
+      });
+      overlay.classList.remove("active");
+    });
+
+    // Cerrar al hacer clic fuera
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".promo-card img.expanded").forEach(img => {
+        img.classList.remove("expanded");
+      });
+      overlay.classList.remove("active");
+    });
+
   </script>
 
 </body>
