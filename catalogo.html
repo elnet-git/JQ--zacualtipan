@@ -225,12 +225,13 @@ body{
 
   <div class="container">
     <div id="marcas" class="marcas">
-      <button class="marca-btn" data-model="pulsar">Pulsar</button>
-      <button class="marca-btn" data-model="dominar">Dominar</button>
-      <button class="marca-btn" data-model="avenger">Avenger</button>
-      <button class="marca-btn" data-model="boxer">Boxer</button>
-      <button class="marca-btn" data-model="ct">CT</button>
-      <button class="marca-btn" data-model="platina">Platina</button>
+      <button class="marca-btn" data-model="A">CHASIS</button>
+      <button class="marca-btn" data-model="B">ELECTRICO</button>
+      <button class="marca-btn" data-model="C">FRENOS </button>
+      <button class="marca-btn" data-model="D">MOTOR</button>
+      <button class="marca-btn" data-model="E">SUSPENCION</button>
+      <button class="marca-btn" data-model="F">TRACCION</button>
+      <button class="marca-btn" data-model="G">TRANSMISION</button>
     </div>
 
     <div id="submodelos" class="scroll-submodelos"></div>
@@ -242,12 +243,13 @@ body{
 <script>
 /* Tu JS original sin cambiar nada importante */
 const submodelosData={
-  pulsar:["NS125","NS160","NS200","NS400 Z","RS200","N160","N250","N125"],
-  dominar:["400","250"],
-  avenger:["150","220"],
-  boxer:["4V","5V"],
-  ct:["100"],
-  platina:["125 5G","125 M","125 ST"]
+  A:["MANIJAS","SALPICADERAS","PUÑOS","POSAPIES","VELOCIMETRO","TAPAS","PARADOR","TAPONES DE GASOLINA"],
+  B:["RELEY","CDI","ARNES","STATOR","FARO","DIRECCIONALES"],
+  C:["CHICOTES","BALATAS","DISCOS","CALIPER","ABS"],
+  D:["CARBURADOR","ARBOL DE LEVAS","JUNTAS","CIGUEÑAL","CILINDRO","CABEZA","VALVULAS","BALEROS","BALANCEADOR","CLUTCH"],
+  E:["MONOSHOCK","BARRAS DELANTERAS","AMORTIGUADOR","RETENES DE BARRA","EJES"],
+  F:["BUJES ","KIT DE ARRASTRE",],
+  G:["EMBRAGUE","ENGRANES",]
 };
 
 const nivel3CarpetaURL="catalogo/nivel3_partes/";
