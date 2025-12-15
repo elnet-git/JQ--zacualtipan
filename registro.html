@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro Rifa JQ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background:
+        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.65)),
+        url("images/fondo.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 15px;
+    }
+
+    .card {
+      background: rgba(30, 30, 30, 0.95);
+      padding: 22px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.7);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .premio {
+      text-align: center;
+      font-size: 15px;
+      margin-bottom: 10px;
+      color: #00e676;
+      font-weight: bold;
+    }
+
+    .contador {
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 14px;
+      background: #000;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    p {
+      text-align: center;
+      font-size: 14px;
+      opacity: .9;
+      margin-bottom: 12px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    input {
+      background: #2c2c2c;
+      color: #fff;
+    }
+
+    input::placeholder { color: #bbb; }
+
+    button {
+      background: #00c853;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #00e676; }
+
+    .admin-btn {
+      margin-top: 15px;
+      background: #ff9800;
+    }
+
+    .small {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 10px;
+      opacity: .7;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Rifa JQ</h1>
+
+  <!-- 👇 EDITA AQUÍ EL PREMIO -->
+  <div class="premio">
+    🎁 Premio: Servicio completo o descuento especial
+  </div>
+
+  <!-- 👇 CUENTA REGRESIVA -->
+  <div class="contador" id="countdown">
+    Cargando cuenta regresiva...
+  </div>
+
+  <p>Regístrate y participa</p>
+
+  <form id="registroForm">
+    <input type="text" id="nombre" placeholder="Nombre" required>
+    <input type="tel" id="telefono" placeholder="Teléfono" required>
+    <input type="text" id="moto" placeholder="Moto / Modelo (opcional)">
+    <button type="submit">Participar</button>
+  </form>
+
+  <button class="admin-btn" id="btnGanador">Elegir ganador (Admin)</button>
+
+  <div class="small">Al registrarte aceptas ser contactado</div>
+</div>
+
+<script>
+  /* ================================
+     CONFIGURACIÓN DE LA RIFA
+     ================================ */
+
+  // 👉 FECHA DE LA RIFA (HOY + 3 SEMANAS)
+  const fechaRifa = new Date();
+  fechaRifa.setDate(fechaRifa.getDate() + 21);
+
+  /* ================================
+     CUENTA REGRESIVA
+     ================================ */
+  const countdownEl = document.getElementById('countdown');
+
+  function actualizarCountdown() {
+    const ahora = new Date();
+    const diff = fechaRifa - ahora;
+
+    if (diff <= 0) {
+      countdownEl.textContent = "🎉 ¡La rifa es hoy!";
+      return;
+    }
+
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diff / (1000 * 60)) % 60);
+    const segundos = Math.floor((diff / 1000) % 60);
+
+    countdownEl.textContent =
+      `⏳ Faltan ${dias} días ${horas}h ${minutos}m ${segundos}s`;
+  }
+
+  setInterval(actualizarCountdown, 1000);
+  actualizarCountdown();
+
+  /* ================================
+     REGISTRO
+     ================================ */
+  const form = document.getElementById('registroForm');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const registros = JSON.parse(localStorage.getItem('registrosJQ')) || [];
+    const p = document.createElement('p');
+    p.style.textAlign = 'center';
+    p.style.marginTop = '10px';
+    p.textContent = `Participantes registrados: ${registros.length}`;
+    document.querySelector('.card').appendChild(p);
+  });
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const ahora = new Date();
+    const hora = ahora.getHours();
+
+    if (hora < 12 || hora >= 15) {
+      alert('⛔ El registro solo está disponible de 12:00 PM a 3:00 PM');
+      return;
+    }
+
+    const nombre = document.getElementById('nombre').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const moto = document.getElementById('moto').value.trim();
+
+    let registros = JSON.parse(localStorage.getItem('registrosJQ')) || [];
+
+    if (registros.some(r => r.telefono === telefono)) {
+      alert('⚠️ Este teléfono ya está registrado');
+      return;
+    }
+
+    registros.push({ nombre, telefono, moto, fecha: ahora.toLocaleString() });
+    localStorage.setItem('registrosJQ', JSON.stringify(registros));
+
+    alert('✅ Registro exitoso');
+  });
+
+  /* ================================
+     ADMIN
+     ================================ */
+  function elegirGanadorJQ() {
+    const registros = JSON.parse(localStorage.getItem('registrosJQ')) || [];
+    if (!registros.length) return alert('No hay participantes');
+    const g = registros[Math.floor(Math.random() * registros.length)];
+    alert(`🎉 Ganador:\n${g.nombre}\nTel: ${g.telefono}`);
+  }
+
+  document.getElementById('btnGanador').addEventListener('click', () => {
+    if (prompt('Contraseña administrador') === 'JQ2025') {
+      elegirGanadorJQ();
+    } else {
+      alert('❌ Contraseña incorrecta');
+    }
+  });
+</script>
+
+</body>
+</html>
