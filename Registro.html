@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Registro Rifa Cris</title>
+  <title>Registro Rifa JQ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -62,7 +62,7 @@
   </style>
 </head>
 <body><div class="card">
-  <h1>Rifa Cris</h1>
+  <h1>Rifa JQ</h1>
   <p>Regístrate y participa para ganar servicio o descuento</p>  <form id="registroForm">
     <input type="text" id="nombre" placeholder="Nombre" required>
     <input type="tel" id="telefono" placeholder="Teléfono" required>
@@ -72,34 +72,74 @@
 </div><script>
   const form = document.getElementById('registroForm');
 
+  // Mostrar contador al cargar
+  document.addEventListener('DOMContentLoaded', () => {
+    const registros = JSON.parse(localStorage.getItem('registrosJQ')) || [];
+    if (!document.getElementById('contador')) {
+      const p = document.createElement('p');
+      p.id = 'contador';
+      p.style.textAlign = 'center';
+      p.style.marginTop = '10px';
+      p.textContent = `Participantes registrados: ${registros.length}`;
+      document.querySelector('.card').appendChild(p);
+    }
+  });
+
   form.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Horario permitido: 12:00 PM a 3:00 PM
     const ahora = new Date();
     const hora = ahora.getHours();
 
+    // Fuera de horario: aviso + redirección
     if (hora < 12 || hora >= 15) {
       alert('⛔ El registro solo está disponible de 12:00 PM a 3:00 PM');
-      // Redirigir aunque no se registre
       window.location.href = "https://elnet-git.github.io/motors.refacciones.ventas/";
       return;
     }
 
-    const registro = {
-      nombre: document.getElementById('nombre').value,
-      telefono: document.getElementById('telefono').value,
-      moto: document.getElementById('moto').value,
-      fecha: ahora.toLocaleString()
-    };
+    const nombre = document.getElementById('nombre').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const moto = document.getElementById('moto').value.trim();
 
-    // Guardar en localStorage
-    let registros = JSON.parse(localStorage.getItem('registrosCris')) || [];
+    let registros = JSON.parse(localStorage.getItem('registrosJQ')) || [];
+
+    // Evitar registros duplicados por teléfono
+    const existe = registros.some(r => r.telefono === telefono);
+    if (existe) {
+      alert('⚠️ Este teléfono ya está registrado');
+      window.location.href = "https://elnet-git.github.io/motors.refacciones.ventas/";
+      return;
+    }
+
+    const registro = { nombre, telefono, moto, fecha: ahora.toLocaleString() };
     registros.push(registro);
-    localStorage.setItem('registrosCris', JSON.stringify(registros));
+    localStorage.setItem('registrosJQ', JSON.stringify(registros));
 
-    // Redirigir a la página principal después de registrar
+    // (Opcional) Envío a Google Sheets vía Apps Script
+    /*
+    fetch('PEGAR_AQUI_TU_URL_DE_GOOGLE_SCRIPT', {
+      method: 'POST',
+      body: JSON.stringify(registro),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    */
+
+    alert('✅ Registro exitoso');
     window.location.href = "https://elnet-git.github.io/motors.refacciones.ventas/";
   });
+
+  // Función para elegir ganador (ejecutar desde consola)
+  window.elegirGanadorJQ = function() {
+    const registros = JSON.parse(localStorage.getItem('registrosJQ')) || [];
+    if (registros.length === 0) {
+      alert('No hay participantes');
+      return;
+    }
+    const ganador = registros[Math.floor(Math.random() * registros.length)];
+    alert(`🎉 Ganador:
+${ganador.nombre}
+Tel: ${ganador.telefono}`);
+  }
 </script></body>
 </html>
