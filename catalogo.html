@@ -29,7 +29,7 @@ h1,h2{
   grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
   gap:20px;
   padding:20px;
-  max-width:1300px;
+  max-width:1400px;
   margin:auto;
 }
 
@@ -42,69 +42,69 @@ h1,h2{
   transition:.25s;
   box-shadow:0 6px 15px rgba(0,0,0,.4);
 }
+
 .card:hover{
-  transform:translateY(-5px);
+  transform:translateY(-6px);
 }
 
 .card img{
   width:100%;
-  height:160px;
+  height:180px;
   object-fit:contain;
   background:#f4f4f4;
 }
 
-.info{
-  padding:12px;
-}
-
-.info h3{
+.card p{
   margin:0;
-  font-size:1rem;
+  padding:12px;
+  font-weight:600;
   color:var(--guinda);
+  text-align:center;
 }
 
-.hidden{display:none}
+.hidden{
+  display:none;
+}
 
-button.back{
-  margin:15px auto;
+.back{
   display:block;
+  margin:15px auto;
   padding:10px 18px;
   border:none;
   background:var(--guinda);
   color:#fff;
   border-radius:6px;
-  font-size:.9rem;
   cursor:pointer;
+  font-size:.9rem;
 }
-button.back:hover{
+
+.back:hover{
   background:var(--guinda-osc);
 }
 
-/* ======================
-   VISOR PANTALLA COMPLETA
-   ====================== */
-#visor{
+/* ===== IMAGEN EXPANDIDA ===== */
+.overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.92);
+  background:rgba(0,0,0,.95);
   display:none;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   z-index:999;
 }
 
-#visor img{
+.overlay img{
   max-width:95%;
   max-height:95%;
   object-fit:contain;
 }
 
-#visor span{
+.overlay span{
   position:absolute;
   top:20px;
   right:30px;
   font-size:32px;
-  color:white;
+  color:#fff;
   cursor:pointer;
 }
 </style>
@@ -115,113 +115,188 @@ button.back:hover{
 <h1>Catálogo de Refacciones Bajaj</h1>
 
 <!-- NIVEL 1 -->
-<section id="nivel1">
-  <h2>MOTOCICLETAS</h2>
-  <div class="grid" id="motosGrid"></div>
+<section id="nivelMotos">
+  <h2>Motocicletas</h2>
+  <div class="grid" id="gridMotos"></div>
 </section>
 
 <!-- NIVEL 2 -->
-<section id="nivel2" class="hidden">
-  <button class="back" onclick="volverNivel1()">← Volver a motos</button>
-  <h2 id="motoTitulo"></h2>
-  <div class="grid" id="sistemasGrid"></div>
+<section id="nivelSistemas" class="hidden">
+  <button class="back" onclick="volverMotos()">← Volver a motos</button>
+  <h2 id="tituloSistemas"></h2>
+  <div class="grid" id="gridSistemas"></div>
 </section>
 
-<!-- VISOR -->
-<div id="visor" onclick="cerrarVisor()">
-  <span>✕</span>
-  <img id="visorImg">
+<!-- IMAGEN FULL -->
+<div class="overlay" id="overlay">
+  <span onclick="cerrarImagen()">✕</span>
+  <img id="imgFull">
 </div>
 
 <script>
-// =====================
-// MOTOS
-// =====================
-const motos = [
- {id:"AV220", nombre:"Bajaj Avenger Cruise 220 2025", img:"images/motos/avenger220.png"},
- {id:"BOX150", nombre:"Bajaj Boxer BM 150 UG 2025", img:"images/motos/boxer150.png"},
- {id:"PLA100", nombre:"Bajaj Boxer Platina 100 2025", img:"images/motos/platina100.png"},
- {id:"DOM250", nombre:"Bajaj Dominar 250 2025", img:"images/motos/dominar250.png"},
- {id:"N125", nombre:"Bajaj Pulsar N125 FI 2026", img:"images/motos/n125.png"},
- {id:"N160", nombre:"Bajaj Pulsar N160 UG FI + ABS 2025", img:"images/motos/n160.png"},
- {id:"N250C", nombre:"Bajaj Pulsar N250 Carburada 2025", img:"images/motos/n250c.png"},
- {id:"N250FI", nombre:"Bajaj Pulsar N250 UG FI + ABS 2025", img:"images/motos/n250fi.png"},
- {id:"NS125", nombre:"Bajaj Pulsar NS 125 UG 2025", img:"images/motos/ns125.png"},
- {id:"NS160", nombre:"Bajaj Pulsar NS 160 UG 2025", img:"images/motos/ns160.png"},
- {id:"NS200", nombre:"Bajaj Pulsar NS 200 UG 2025", img:"images/motos/ns200.png"},
- {id:"RS200", nombre:"Bajaj Pulsar RS 200 2025", img:"images/motos/rs200.png"},
- {id:"DOM400AG", nombre:"Dominar 400 4 Elementos Agua 2025", img:"images/motos/dom400-agua.png"},
- {id:"DOM400AR", nombre:"Dominar 400 4 Elementos Aire 2025", img:"images/motos/dom400-aire.png"},
- {id:"DOM400FU", nombre:"Dominar 400 4 Elementos Fuego 2025", img:"images/motos/dom400-fuego.png"},
- {id:"DOM400TI", nombre:"Dominar 400 4 Elementos Tierra 2025", img:"images/motos/dom400-tierra.png"},
- {id:"DOM400UG", nombre:"Dominar 400 UG Touring 2025", img:"images/motos/dominar400ug.png"},
- {id:"NS400Z", nombre:"Pulsar NS 400Z 2025", img:"images/motos/ns400z.png"}
-];
+/* =====================
+   CATÁLOGO
+===================== */
+const catalogo = {
+  AV220:{
+    nombre:"Avenger 220",
+    img:"motos/avenger220.png",
+    sistemas:[
+      "carenado","cilindro","electrico","frenos",
+      "llantas","motor","suspension","transmision"
+    ]
+  },
+  BOX150:{
+    nombre:"Boxer 150",
+    img:"motos/boxer150.png",
+    sistemas:[
+      "carburador","carenado","electrico",
+      "llantas","motor","rin y frenos","suspension"
+    ]
+  },
+  DOM250:{
+    nombre:"Dominar 250",
+    img:"motos/dominar250.png",
+    sistemas:[
+      "cabeza y valvulas","carenado y sis. electrico",
+      "chasis y suspencion","cilindro",
+      "cuerpo de aceleracion","direccionales y arnes",
+      "llantas","motor y pedal de cambios",
+      "radiador","sistema de frenado y mando"
+    ]
+  },
+  N125:{
+    nombre:"Pulsar N125",
+    img:"motos/n125.png",
+    sistemas:[
+      "arbol de levas","cabeza","carenado","carter",
+      "chasis","cigueñal","cilindro","clucht",
+      "electrico","faro","llantas","mando",
+      "pedal de arranque","posapies","salpicaderas",
+      "suspencion","tambor","transmicion","valvulas"
+    ]
+  },
+  N160:{
+    nombre:"Pulsar N160",
+    img:"motos/n160.png",
+    sistemas:[
+      "cabeza","carenado y velocimetro",
+      "chasis, llantas, posapies",
+      "cilindro","electrico",
+      "frenado, tanque y mando"
+    ]
+  },
+  N250C:{
+    nombre:"Pulsar N250",
+    img:"motos/n250c.png",
+    sistemas:[
+      "arbol de levas","barras","cabeza de cilindro",
+      "cabeza","carburador","carenado trasero",
+      "carenado","carter","chasis","cigueñal",
+      "cilindro","electrico","escape","estator",
+      "faro","filtro de aire","mando",
+      "parador lateral y central",
+      "pedal de cambios","pedal de freno",
+      "porta placa","radiador","rin y llantas",
+      "salpicaderas","sist. frenado",
+      "suspencion","tablero","tambor",
+      "tanque","transmision","valvulas"
+    ]
+  },
+  PLA100:{
+    nombre:"Platina 100",
+    img:"motos/platina100.png",
+    sistemas:[
+      "cabeza y valvulas","carburador y cluch",
+      "chasis","cilindro cigueñal y transmicion",
+      "frenos y mando","motor y tambor"
+    ]
+  },
 
-// =====================
-// SISTEMAS
-// =====================
-const sistemas = [
- {id:"motor", nombre:"Motor", img:"images/sistemas/motor.png"},
- {id:"frenos", nombre:"Frenos y tanque de gasolina",img:"images/sistemas/frenos.png"},
- {id:"electrico", nombre:"Sistema Eléctrico y Parabrisas",img:"images/sistemas/electrico.png"},
- {id:"suspension", nombre:"Suspensión", img:"images/sistemas/suspension.png"},
- {id:"carroceria", nombre:"Carrocería", img:"images/sistemas/carroceria.png"},
- {id:"llantas", nombre:"Llantas y Rines", img:"images/sistemas/llantas.png"},
- {id:"transmision", nombre:"Transmisión", img:"images/sistemas/transmision.png"}
-];
+  /* ===== MOTOS SIN SISTEMAS AÚN ===== */
+  NS125:{nombre:"Pulsar NS 125",img:"motos/ns125.png",sistemas:[]},
+  NS160:{nombre:"Pulsar NS 160",img:"motos/ns160.png",sistemas:[]},
+  NS200:{nombre:"Pulsar NS 200",img:"motos/ns200.png",sistemas:[]},
+  RS200:{nombre:"Pulsar RS 200",img:"motos/rs200.png",sistemas:[]},
+  DOM400UG:{nombre:"Dominar 400 UG",img:"motos/dominar400ug.png",sistemas:[]},
+  NS400Z:{nombre:"Pulsar NS 400Z",img:"motos/ns400z.png",sistemas:[]}
+};
 
-const motosGrid = document.getElementById("motosGrid");
-const sistemasGrid = document.getElementById("sistemasGrid");
+/* =====================
+   REFERENCIAS
+===================== */
+const gridMotos = document.getElementById("gridMotos");
+const gridSistemas = document.getElementById("gridSistemas");
+const nivelMotos = document.getElementById("nivelMotos");
+const nivelSistemas = document.getElementById("nivelSistemas");
+const tituloSistemas = document.getElementById("tituloSistemas");
+const overlay = document.getElementById("overlay");
+const imgFull = document.getElementById("imgFull");
 
-let motoSel = null;
+/* =====================
+   FUNCIONES
+===================== */
+function cargarMotos(){
+  gridMotos.innerHTML="";
+  nivelMotos.classList.remove("hidden");
+  nivelSistemas.classList.add("hidden");
 
-// NIVEL 1
-motos.forEach(m=>{
-  const c=document.createElement("div");
-  c.className="card";
-  c.innerHTML=`
-    <img src="${m.img}" onerror="this.src='images/placeholder.png'">
-    <div class="info"><h3>${m.nombre}</h3></div>
-  `;
-  c.onclick=()=>abrirSistemas(m);
-  motosGrid.appendChild(c);
-});
-
-// NIVEL 2
-function abrirSistemas(moto){
-  motoSel = moto;
-  nivel1.classList.add("hidden");
-  nivel2.classList.remove("hidden");
-  motoTitulo.innerText = moto.nombre;
-  sistemasGrid.innerHTML="";
-
-  sistemas.forEach(s=>{
-    const c=document.createElement("div");
+  Object.keys(catalogo).forEach(id=>{
+    const m = catalogo[id];
+    const c = document.createElement("div");
     c.className="card";
     c.innerHTML=`
-      <img src="${s.img}" onerror="this.src='images/placeholder.png'">
-      <div class="info"><h3>${s.nombre}</h3></div>
+      <img src="${m.img}" onerror="this.src='placeholder.png'">
+      <p>${m.nombre}</p>
     `;
-    c.onclick=()=>abrirVisor(s.img);
-    sistemasGrid.appendChild(c);
+    c.onclick=()=>cargarSistemas(id);
+    gridMotos.appendChild(c);
   });
 }
 
-function volverNivel1(){
-  nivel2.classList.add("hidden");
-  nivel1.classList.remove("hidden");
+function cargarSistemas(id){
+  const moto = catalogo[id];
+  gridSistemas.innerHTML="";
+  nivelMotos.classList.add("hidden");
+  nivelSistemas.classList.remove("hidden");
+  tituloSistemas.textContent = moto.nombre;
+
+  if(moto.sistemas.length===0){
+    gridSistemas.innerHTML =
+      "<p style='grid-column:1/-1;text-align:center;font-size:18px'>🚧 Próximamente</p>";
+    return;
+  }
+
+  moto.sistemas.forEach(nombre=>{
+    const ruta = `sistemas/${id}/${nombre}.png`;
+    const c = document.createElement("div");
+    c.className="card";
+    c.innerHTML=`
+      <img src="${ruta}" onclick="verImagen('${ruta}')" onerror="this.src='placeholder.png'">
+      <p>${nombre}</p>
+    `;
+    gridSistemas.appendChild(c);
+  });
 }
 
-// VISOR
-function abrirVisor(img){
-  visorImg.src = img;
-  visor.style.display="flex";
+function volverMotos(){
+  cargarMotos();
 }
 
-function cerrarVisor(){
-  visor.style.display="none";
+function verImagen(src){
+  imgFull.src = src;
+  overlay.style.display="flex";
 }
+
+function cerrarImagen(){
+  overlay.style.display="none";
+  imgFull.src="";
+}
+
+/* =====================
+   INICIO
+===================== */
+cargarMotos();
 </script>
 
 </body>
