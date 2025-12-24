@@ -41,20 +41,6 @@ header.navbar{
 .logo img{height:64px;}
 .logo h1{margin:0;font-size:1rem;color:#fff;}
 
-nav ul{
-  list-style:none;
-  display:flex;
-  gap:12px;
-  margin:0;
-  padding:0;
-}
-
-nav a{
-  color:#fff;
-  text-decoration:none;
-  font-weight:700;
-}
-
 /* ===== CONTENIDO ===== */
 .page-header{text-align:center;padding:20px;}
 .search-container{text-align:center;margin:20px;}
@@ -109,7 +95,7 @@ nav a{
   border-radius:6px;
 }
 
-/* ===== OVERLAY INTERACTIVO ===== */
+/* ===== OVERLAY ===== */
 .overlay{
   position:fixed;
   inset:0;
@@ -160,6 +146,7 @@ nav a{
   padding:15px;
   overflow:auto;
 }
+
 .info-panel table{
   width:100%;
   border-collapse:collapse;
@@ -172,6 +159,15 @@ nav a{
 .info-panel tr:hover{
   background:#222;
   cursor:pointer;
+}
+
+/* ===== SELECCIÓN PONVA ===== */
+.tr-selected{
+  background:#7B1E1E !important;
+  color:#fff;
+}
+.tr-selected:hover{
+  background:#5a1414 !important;
 }
 </style>
 </head>
@@ -227,7 +223,7 @@ nav a{
 </div>
 
 <script>
-/* ===== CATÁLOGO (EJEMPLO CON PIEZAS) ===== */
+/* ===== CATÁLOGO (EJEMPLO BASE) ===== */
 const catalogo={
   DOM400:{
     nombre:"Dominar 400",
@@ -256,6 +252,22 @@ const overlay=document.getElementById("overlay");
 const imgFull=document.getElementById("imgFull");
 const imgWrap=document.getElementById("imgWrap");
 const tablaPiezas=document.getElementById("tablaPiezas");
+
+/* ===== PONVA STORAGE ===== */
+function keyPonva(sistema,codigo){
+  return `ponva_${sistema.nombre}_${codigo}`;
+}
+function isPonva(sistema,codigo){
+  return localStorage.getItem(keyPonva(sistema,codigo))==="1";
+}
+function togglePonva(sistema,codigo){
+  const k=keyPonva(sistema,codigo);
+  if(localStorage.getItem(k)==="1"){
+    localStorage.removeItem(k);
+  }else{
+    localStorage.setItem(k,"1");
+  }
+}
 
 /* ===== FUNCIONES ===== */
 function cargarMotos(filter=""){
@@ -294,9 +306,19 @@ function verImagenSistema(sistema){
   tablaPiezas.innerHTML="";
   imgWrap.querySelectorAll(".hotspot").forEach(h=>h.remove());
 
-  sistema.piezas?.forEach(p=>{
+  sistema.piezas.forEach(p=>{
     const tr=document.createElement("tr");
     tr.innerHTML=`<td>${p.codigo}</td><td>${p.desc}</td><td>${p.qty}</td>`;
+
+    if(isPonva(sistema,p.codigo)){
+      tr.classList.add("tr-selected");
+    }
+
+    tr.onclick=()=>{
+      togglePonva(sistema,p.codigo);
+      tr.classList.toggle("tr-selected");
+    };
+
     tablaPiezas.appendChild(tr);
 
     if(p.zona){
