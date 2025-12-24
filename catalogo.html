@@ -16,26 +16,22 @@ body{
   background:var(--fondo);
   color:#eee;
 }
-header.navbar{
-  display:flex;
-  align-items:center;
+
+/* ===== NAV ===== */
+header{
   background:var(--guinda);
   padding:10px 18px;
-  position:sticky;
-  top:0;
-  z-index:1100;
+  display:flex;
+  align-items:center;
 }
-.logo{display:flex;align-items:center;gap:12px}
-.logo img{height:60px}
-.logo h1{margin:0;font-size:1rem;color:#fff}
+header img{height:60px;margin-right:10px}
 
+/* ===== GRID ===== */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
   gap:20px;
   padding:20px;
-  max-width:1400px;
-  margin:auto;
 }
 .card{
   background:#fff;
@@ -51,23 +47,21 @@ header.navbar{
   width:100%;
   height:180px;
   object-fit:contain;
-  background:#f4f4f4;
 }
 .card p{
-  margin:0;
-  padding:12px;
   text-align:center;
-  font-weight:600;
+  font-weight:bold;
   color:var(--guinda);
 }
 .hidden{display:none}
 
+/* ===== OVERLAY ===== */
 .overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.96);
+  background:rgba(0,0,0,.95);
   display:none;
-  z-index:2000;
+  z-index:1000;
 }
 .overlay-content{
   display:flex;
@@ -76,51 +70,45 @@ header.navbar{
 .img-zone{
   flex:2;
   position:relative;
-  overflow:hidden;
 }
 .img-zone img{
   max-width:100%;
   max-height:100%;
-  display:block;
   margin:auto;
+  display:block;
 }
-.zone{
+#svgZone{
   position:absolute;
-  border:2px solid rgba(255,0,0,.8);
-  background:rgba(255,0,0,.25);
-  pointer-events:none;
-  display:none;
+  inset:0;
 }
+.zone-path{
+  fill:rgba(255,0,0,.25);
+  stroke:red;
+  stroke-width:2;
+  display:none;
+  pointer-events:none;
+}
+
+/* ===== TABLA ===== */
 .data-panel{
   flex:1;
   background:#111;
-  padding:15px;
+  padding:10px;
   overflow:auto;
-  border-left:2px solid #333;
 }
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:.9rem;
-}
-th,td{
-  border-bottom:1px solid #333;
-  padding:6px;
-}
-tr:hover{background:#222}
+table{width:100%;border-collapse:collapse}
+td,th{border-bottom:1px solid #333;padding:6px}
 
+/* ===== ADMIN ===== */
 .admin-btn{
-  position:absolute;
-  bottom:20px;
-  right:20px;
-  padding:10px 15px;
   background:var(--guinda);
   color:#fff;
   border:none;
-  cursor:pointer;
-  border-radius:6px;
+  padding:8px;
+  width:100%;
+  margin-top:10px;
 }
-.admin-panel{display:none;margin-top:10px}
+.admin-panel{display:none}
 .admin-panel input{
   width:100%;
   margin-bottom:6px;
@@ -128,8 +116,8 @@ tr:hover{background:#222}
 }
 .close{
   position:absolute;
-  top:15px;
-  right:20px;
+  top:10px;
+  right:15px;
   font-size:28px;
   cursor:pointer;
 }
@@ -138,11 +126,9 @@ tr:hover{background:#222}
 
 <body>
 
-<header class="navbar">
-  <div class="logo">
-    <img src="images/logo/logo.png">
-    <h1>JQ RODANDO MOMENTOS</h1>
-  </div>
+<header>
+  <img src="images/logo/logo.png">
+  <h2>JQ RODANDO MOMENTOS</h2>
 </header>
 
 <section id="nivelMotos">
@@ -160,6 +146,7 @@ tr:hover{background:#222}
   <div class="overlay-content">
     <div class="img-zone" id="imgZone">
       <img id="imgFull">
+      <svg id="svgZone"></svg>
     </div>
 
     <div class="data-panel">
@@ -172,7 +159,6 @@ tr:hover{background:#222}
       </table>
 
       <button class="admin-btn" onclick="activarAdmin()">ADMIN</button>
-
       <div class="admin-panel" id="adminPanel">
         <input id="aCodigo" placeholder="Código">
         <input id="aDesc" placeholder="Descripción">
@@ -184,38 +170,76 @@ tr:hover{background:#222}
 </div>
 
 <script>
-/* ===================== CATÁLOGO ===================== */
+/* ===================== CATÁLOGO COMPLETO ===================== */
 const catalogo = {
-  AV220:{nombre:"Avenger 220",img:"images/motos/avenger220.png",
-    sistemas:[{nombre:"carenado",img:"images/sistemas/AV220/carenado.png"}]},
-  BOX150:{nombre:"Boxer 150",img:"images/motos/boxer150.png",
-    sistemas:[{nombre:"motor",img:"images/sistemas/BOX150/motor.png"}]},
-  DOM400:{nombre:"Dominar 400",img:"images/motos/dom400-agua.png",
-    sistemas:[{nombre:"cabeza",img:"images/sistemas/DOM400/cabeza.png"}]},
-  N160:{nombre:"Pulsar N160",img:"images/motos/n160.png",
-    sistemas:[{nombre:"electrico",img:"images/sistemas/N160/electrico.png"}]}
+  AV220:{nombre:"Avenger 220",img:"images/motos/avenger220.png",sistemas:[
+    {nombre:"carenado",img:"images/sistemas/AV220/carenado.png"},
+    {nombre:"cilindro",img:"images/sistemas/AV220/cilindro.png"},
+    {nombre:"electrico",img:"images/sistemas/AV220/electrico.png"},
+    {nombre:"frenos",img:"images/sistemas/AV220/frenos.png"},
+    {nombre:"llantas",img:"images/sistemas/AV220/llantas.png"},
+    {nombre:"motor",img:"images/sistemas/AV220/motor.png"},
+    {nombre:"suspension",img:"images/sistemas/AV220/suspension.png"},
+    {nombre:"transmision",img:"images/sistemas/AV220/transmision.png"}
+  ]},
+  BOX150:{nombre:"Boxer 150",img:"images/motos/boxer150.png",sistemas:[
+    {nombre:"carburador",img:"images/sistemas/BOX150/carburador.png"},
+    {nombre:"carenado",img:"images/sistemas/BOX150/carenado.png"},
+    {nombre:"electrico",img:"images/sistemas/BOX150/electrico.png"},
+    {nombre:"llantas",img:"images/sistemas/BOX150/llantas.png"},
+    {nombre:"motor",img:"images/sistemas/BOX150/motor.png"},
+    {nombre:"rin y frenos",img:"images/sistemas/BOX150/rin%20y%20frenos.png"},
+    {nombre:"suspension",img:"images/sistemas/BOX150/suspension.png"}
+  ]},
+  DOM250:{nombre:"Dominar 250",img:"images/motos/dominar250.png",sistemas:[
+    {nombre:"cabeza y valvulas",img:"images/sistemas/DOM250/cabeza%20y%20valvulas.png"},
+    {nombre:"carenado y sis. electrico",img:"images/sistemas/DOM250/carenado%20y%20sis.%20electrico.png"},
+    {nombre:"chasis y suspencion",img:"images/sistemas/DOM250/chasis%20y%20suspencion.png"},
+    {nombre:"cilindro",img:"images/sistemas/DOM250/cilindro.png"},
+    {nombre:"cuerpo de aceleracion",img:"images/sistemas/DOM250/cuerpo%20de%20aceleracion.png"},
+    {nombre:"direccionales y arnes",img:"images/sistemas/DOM250/direccionales%20y%20arnes.png"},
+    {nombre:"llantas",img:"images/sistemas/DOM250/llantas.png"},
+    {nombre:"motor y pedal de cambios",img:"images/sistemas/DOM250/motor%20y%20pedal%20de%20cambios.png"},
+    {nombre:"radiador",img:"images/sistemas/DOM250/radiador.png"},
+    {nombre:"sistema de frenado y mando",img:"images/sistemas/DOM250/sistema%20de%20frenado%20y%20mando.png"}
+  ]},
+  DOM400:{nombre:"Dominar 400",img:"images/motos/dom400-agua.png",sistemas:[{nombre:"cabeza",img:"images/sistemas/DOM400/cabeza.png"}]},
+  DOM400A:{nombre:"Dominar 400 Aire",img:"images/motos/dom400-agua.png",sistemas:[{nombre:"cabeza",img:"images/sistemas/DOM400/cabeza.png"}]},
+  DOM400F:{nombre:"Dominar 400 Fuego",img:"images/motos/dom400-agua.png",sistemas:[{nombre:"cabeza",img:"images/sistemas/DOM400/cabeza.png"}]},
+  DOM400T:{nombre:"Dominar 400 Tierra",img:"images/motos/dom400-agua.png",sistemas:[{nombre:"cabeza",img:"images/sistemas/DOM400/cabeza.png"}]},
+  DOM400UG:{nombre:"Dominar 400 UG",img:"images/motos/dom400-agua.png",sistemas:[{nombre:"cabeza",img:"images/sistemas/DOM400/cabeza.png"}]},
+  N125:{nombre:"Pulsar N125",img:"images/motos/n125.png",sistemas:[
+    {nombre:"cabeza",img:"images/sistemas/N125/cabeza.png"},
+    {nombre:"cilindro",img:"images/sistemas/N125/cilindro.png"}
+  ]},
+  N160:{nombre:"Pulsar N160",img:"images/motos/n160.png",sistemas:[
+    {nombre:"cabeza",img:"images/sistemas/N160/cabeza.png"}
+  ]},
+  N250C:{nombre:"Pulsar N250",img:"images/motos/n250c.png",sistemas:[
+    {nombre:"motor",img:"images/sistemas/N250C/motor.png"}
+  ]},
+  N250FI:{nombre:"Pulsar N250 FI",img:"images/motos/n250fi.png",sistemas:[
+    {nombre:"motor",img:"images/sistemas/N250C/motor.png"}
+  ]},
+  RS200:{nombre:"Pulsar RS200",img:"images/motos/rs200.png",sistemas:[
+    {nombre:"cabeza",img:"images/sistemas/RS200/cabeza.png"}
+  ]}
 };
 
-/* ===================== ESTADO ===================== */
+/* ===================== LÓGICA ===================== */
 let motoActual="", sistemaActual="";
-let admin=false;
-let zonas=[], zonaTemp=null;
-let startX=0,startY=0;
-
+let admin=false, zonas=[];
 const gridMotos=document.getElementById("gridMotos");
 const gridSistemas=document.getElementById("gridSistemas");
 const overlay=document.getElementById("overlay");
 const imgFull=document.getElementById("imgFull");
-const imgZone=document.getElementById("imgZone");
+const svg=document.getElementById("svgZone");
 const tabla=document.getElementById("tablaPiezas");
 
-/* ===================== INICIO ===================== */
-cargarMotos();
+function keyLS(){return "ZONAS_"+motoActual+"_"+sistemaActual}
 
 function cargarMotos(){
   gridMotos.innerHTML="";
-  document.getElementById("nivelMotos").classList.remove("hidden");
-  document.getElementById("nivelSistemas").classList.add("hidden");
   Object.keys(catalogo).forEach(id=>{
     const c=document.createElement("div");
     c.className="card";
@@ -224,12 +248,11 @@ function cargarMotos(){
     gridMotos.appendChild(c);
   });
 }
-
 function cargarSistemas(id){
   motoActual=id;
-  gridSistemas.innerHTML="";
   document.getElementById("nivelMotos").classList.add("hidden");
   document.getElementById("nivelSistemas").classList.remove("hidden");
+  gridSistemas.innerHTML="";
   document.getElementById("tituloSistemas").textContent=catalogo[id].nombre;
   catalogo[id].sistemas.forEach(s=>{
     const c=document.createElement("div");
@@ -239,90 +262,76 @@ function cargarSistemas(id){
     gridSistemas.appendChild(c);
   });
 }
-
-function volverMotos(){cargarMotos();}
-
-function abrirOverlay(sistema,img){
-  sistemaActual=sistema;
+function volverMotos(){
+  document.getElementById("nivelSistemas").classList.add("hidden");
+  document.getElementById("nivelMotos").classList.remove("hidden");
+}
+function abrirOverlay(s,img){
+  sistemaActual=s;
   overlay.style.display="block";
   imgFull.src=img;
   cargarZonas();
-  renderTabla();
 }
-
 function cerrarOverlay(){
   overlay.style.display="none";
   tabla.innerHTML="";
-  imgZone.querySelectorAll(".zone").forEach(z=>z.remove());
+  svg.innerHTML="";
 }
-
 function activarAdmin(){
-  if(prompt("Contraseña admin:")==="Neto30"){
+  if(prompt("Contraseña:")==="Neto30"){
     admin=true;
     document.getElementById("adminPanel").style.display="block";
-    alert("Modo admin activo");
   }
 }
 
-function keyLS(){return "ZONAS_"+motoActual+"_"+sistemaActual;}
+/* ===== MANO ALZADA ===== */
+let drawing=false,puntos=[],pathTemp=null;
+imgZone.addEventListener("mousedown",e=>{
+  if(!admin) return;
+  drawing=true;
+  puntos=[];
+  pathTemp=document.createElementNS("http://www.w3.org/2000/svg","path");
+  pathTemp.setAttribute("class","zone-path");
+  svg.appendChild(pathTemp);
+});
+imgZone.addEventListener("mousemove",e=>{
+  if(!drawing) return;
+  const r=imgZone.getBoundingClientRect();
+  puntos.push({x:e.clientX-r.left,y:e.clientY-r.top});
+  let d=`M ${puntos[0].x} ${puntos[0].y}`;
+  puntos.forEach(p=>d+=` L ${p.x} ${p.y}`);
+  pathTemp.setAttribute("d",d+" Z");
+});
+imgZone.addEventListener("mouseup",()=>drawing=false);
 
+function guardarZona(){
+  zonas.push({
+    path:pathTemp.getAttribute("d"),
+    codigo:aCodigo.value,
+    desc:aDesc.value,
+    cant:aCant.value
+  });
+  localStorage.setItem(keyLS(),JSON.stringify(zonas));
+  cargarZonas();
+}
 function cargarZonas(){
   zonas=JSON.parse(localStorage.getItem(keyLS()))||[];
-  imgZone.querySelectorAll(".zone").forEach(z=>z.remove());
-  zonas.forEach(z=>{
-    const d=document.createElement("div");
-    d.className="zone";
-    Object.assign(d.style,{left:z.x+"px",top:z.y+"px",width:z.w+"px",height:z.h+"px"});
-    imgZone.appendChild(d);
-    z.el=d;
-  });
-}
-
-function renderTabla(){
+  svg.innerHTML="";
   tabla.innerHTML="";
   zonas.forEach(z=>{
+    const p=document.createElementNS("http://www.w3.org/2000/svg","path");
+    p.setAttribute("d",z.path);
+    p.setAttribute("class","zone-path");
+    svg.appendChild(p);
     const tr=document.createElement("tr");
     tr.innerHTML=`<td>${z.codigo}</td><td>${z.desc}</td><td>${z.cant}</td>`;
-    tr.onmouseenter=()=>z.el.style.display="block";
-    tr.onmouseleave=()=>z.el.style.display="none";
+    tr.onmouseenter=()=>p.style.display="block";
+    tr.onmouseleave=()=>p.style.display="none";
     tabla.appendChild(tr);
   });
 }
 
-imgZone.addEventListener("mousedown",e=>{
-  if(!admin) return;
-  startX=e.offsetX; startY=e.offsetY;
-  zonaTemp=document.createElement("div");
-  zonaTemp.className="zone";
-  zonaTemp.style.left=startX+"px";
-  zonaTemp.style.top=startY+"px";
-  imgZone.appendChild(zonaTemp);
-});
-imgZone.addEventListener("mousemove",e=>{
-  if(!admin||!zonaTemp) return;
-  zonaTemp.style.width=(e.offsetX-startX)+"px";
-  zonaTemp.style.height=(e.offsetY-startY)+"px";
-});
-imgZone.addEventListener("mouseup",()=>{});
-
-function guardarZona(){
-  if(!zonaTemp) return;
-  zonas.push({
-    x:parseInt(zonaTemp.style.left),
-    y:parseInt(zonaTemp.style.top),
-    w:parseInt(zonaTemp.style.width),
-    h:parseInt(zonaTemp.style.height),
-    codigo:aCodigo.value,
-    desc:aDesc.value,
-    cant:aCant.value,
-    el:zonaTemp
-  });
-  localStorage.setItem(keyLS(),JSON.stringify(zonas));
-  zonaTemp=null;
-  aCodigo.value=aDesc.value=aCant.value="";
-  renderTabla();
-}
+cargarMotos();
 </script>
-
 </body>
 </html>
