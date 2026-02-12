@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>JQ Motors - Catálogo Refacciones Bajaj</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --guinda:#7B1E1E;
+  --guinda-osc:#5a1414;
+  --neon:#ff4d4d;
+  --fondo:#111;
+}
+
+/* ====== GENERAL ====== */
+body{
+  margin:0;
+  font-family:Montserrat,sans-serif;
+  background:var(--fondo);
+  color:#eee;
+}
+
+/* ====== NAVBAR ====== */
+header.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--guinda);
+  padding:10px 18px;
+  position:sticky;
+  top:0;
+  z-index:1100;
+}
+
+.logo{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.logo img{height:60px;}
+.logo h1{font-size:1rem;margin:0;}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:12px;
+  margin:0;
+}
+nav a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* ====== CONTENIDO ====== */
+.page-header{text-align:center;padding:20px;}
+.search-container{text-align:center;margin:20px;}
+.search-container input{
+  padding:10px;
+  border-radius:8px;
+  border:none;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:20px;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  color:#000;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:0 6px 15px rgba(0,0,0,.4);
+}
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:contain;
+  background:#f4f4f4;
+}
+.card p{
+  margin:0;
+  padding:10px;
+  text-align:center;
+  font-weight:600;
+  color:var(--guinda);
+}
+
+.hidden{display:none;}
+.back{
+  margin:15px auto;
+  display:block;
+  padding:10px 18px;
+  background:var(--guinda);
+  color:#fff;
+  border:none;
+  border-radius:6px;
+}
+
+/* ====== OVERLAY INTERACTIVO ====== */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.overlay span{
+  position:absolute;
+  top:15px;
+  right:25px;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.overlay-content{
+  display:flex;
+  width:95%;
+  height:95%;
+  gap:20px;
+}
+
+.img-wrap{
+  flex:2;
+  position:relative;
+}
+.img-wrap img{
+  max-width:100%;
+  max-height:100%;
+  display:block;
+}
+
+.hotspot{
+  position:absolute;
+  border:2px solid rgba(255,77,77,.9);
+  background:rgba(255,77,77,.25);
+  box-shadow:0 0 12px rgba(255,77,77,.9);
+  display:none;
+  pointer-events:none;
+}
+
+.info-panel{
+  flex:1;
+  background:#111;
+  border-radius:10px;
+  padding:15px;
+  overflow:auto;
+}
+
+.info-panel table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.9rem;
+}
+.info-panel th, .info-panel td{
+  border-bottom:1px solid #333;
+  padding:6px;
+}
+.info-panel tr:hover{
+  background:#222;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/logo/logo.png">
+    <h1>JQ RODANDO MOMENTOS</h1>
+  </div>
+</header>
+
+<header class="page-header">
+  <h1>Catálogo Refacciones Bajaj</h1>
+</header>
+
+<div class="search-container">
+  <input id="buscador" placeholder="Buscar moto...">
+</div>
+
+<section id="nivelMotos">
+  <div class="grid" id="gridMotos"></div>
+</section>
+
+<section id="nivelSistemas" class="hidden">
+  <button class="back" onclick="volverMotos()">← Volver</button>
+  <h2 id="tituloSistemas"></h2>
+  <div class="grid" id="gridSistemas"></div>
+</section>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <span onclick="cerrarImagen()">✕</span>
+
+  <div class="overlay-content">
+    <div class="img-wrap" id="imgWrap">
+      <img id="imgFull">
+    </div>
+
+    <div class="info-panel">
+      <h3>Refacciones del sistema</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Cant.</th>
+          </tr>
+        </thead>
+        <tbody id="tablaPiezas"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ====== CATÁLOGO ====== */
+const catalogo={
+  DOM400:{
+    nombre:"Dominar 400",
+    img:"images/motos/dom400-agua.png",
+    sistemas:[
+      {
+        nombre:"Cabeza",
+        img:"images/sistemas/DOM400/cabeza.png",
+        piezas:[
+          {
+            codigo:"BAJ-1001",
+            desc:"Válvula admisión",
+            qty:2,
+            zona:{x:42,y:30,w:8,h:12}
+          },
+          {
+            codigo:"BAJ-1002",
+            desc:"Válvula escape",
+            qty:2,
+            zona:{x:52,y:30,w:8,h:12}
+          },
+          {
+            codigo:"BAJ-1003",
+            desc:"Empaque de cabeza",
+            qty:1
+          }
+        ]
+      }
+    ]
+  }
+};
+
+/* ====== REFERENCIAS ====== */
+const gridMotos=document.getElementById("gridMotos");
+const gridSistemas=document.getElementById("gridSistemas");
+const nivelMotos=document.getElementById("nivelMotos");
+const nivelSistemas=document.getElementById("nivelSistemas");
+const tituloSistemas=document.getElementById("tituloSistemas");
+const overlay=document.getElementById("overlay");
+const imgFull=document.getElementById("imgFull");
+const imgWrap=document.getElementById("imgWrap");
+const tablaPiezas=document.getElementById("tablaPiezas");
+
+/* ====== FUNCIONES ====== */
+function cargarMotos(filter=""){
+  gridMotos.innerHTML="";
+  nivelMotos.classList.remove("hidden");
+  nivelSistemas.classList.add("hidden");
+
+  Object.values(catalogo).forEach(m=>{
+    if(filter && !m.nombre.toLowerCase().includes(filter.toLowerCase()))return;
+    const c=document.createElement("div");
+    c.className="card";
+    c.innerHTML=`<img src="${m.img}"><p>${m.nombre}</p>`;
+    c.onclick=()=>cargarSistemas(m);
+    gridMotos.appendChild(c);
+  });
+}
+
+function cargarSistemas(moto){
+  gridSistemas.innerHTML="";
+  nivelMotos.classList.add("hidden");
+  nivelSistemas.classList.remove("hidden");
+  tituloSistemas.textContent=moto.nombre;
+
+  moto.sistemas.forEach(s=>{
+    const c=document.createElement("div");
+    c.className="card";
+    c.innerHTML=`<img src="${s.img}"><p>${s.nombre}</p>`;
+    c.onclick=()=>verImagenSistema(s);
+    gridSistemas.appendChild(c);
+  });
+}
+
+function verImagenSistema(sistema){
+  overlay.style.display="flex";
+  imgFull.src=sistema.img;
+  tablaPiezas.innerHTML="";
+  imgWrap.querySelectorAll(".hotspot").forEach(h=>h.remove());
+
+  sistema.piezas?.forEach((p,i)=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${p.codigo}</td><td>${p.desc}</td><td>${p.qty}</td>`;
+    tablaPiezas.appendChild(tr);
+
+    if(p.zona){
+      const h=document.createElement("div");
+      h.className="hotspot";
+      h.style.left=p.zona.x+"%";
+      h.style.top=p.zona.y+"%";
+      h.style.width=p.zona.w+"%";
+      h.style.height=p.zona.h+"%";
+      imgWrap.appendChild(h);
+
+      tr.onmouseenter=()=>h.style.display="block";
+      tr.onmouseleave=()=>h.style.display="none";
+    }
+  });
+}
+
+function cerrarImagen(){
+  overlay.style.display="none";
+  imgFull.src="";
+}
+
+function volverMotos(){cargarMotos();}
+
+/* BUSCADOR */
+document.getElementById("buscador")
+.addEventListener("input",e=>cargarMotos(e.target.value));
+
+cargarMotos();
+</script>
+
+</body>
+</html>
