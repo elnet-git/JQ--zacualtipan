@@ -242,3 +242,86 @@ header.navbar {
     transform: translateY(-3px);
     box-shadow: 0 6px 18px rgba(0,0,0,.35);
   }
+/* =================== RESPONSIVE CELULAR COMPLETO =================== */
+@media (max-width: 768px) {
+
+  /* NAVBAR */
+  header.navbar {
+    padding: 15px 10px;
+  }
+
+  .logo {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logo img {
+    height: 70px;
+  }
+
+  .sucursal {
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .navbar nav {
+    margin-top: 12px;
+  }
+
+  .navbar nav ul {
+    gap: 8px;
+  }
+
+  .navbar a {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  /* SLIDER */
+  .slider {
+    height: 40vh;
+  }
+
+  .text {
+    font-size: 14px;
+    padding: 6px 10px;
+    left: 10px;
+    bottom: 10px;
+  }
+
+  /* PROMOCIONES */
+  .promociones {
+    padding: 20px 12px;
+  }
+
+  .promo-container {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .promo-card {
+    padding: 14px;
+  }
+
+  .promo-card img {
+    width: 85%;
+  }
+
+  /* PIZARRON */
+  .pizarron {
+    padding: 25px 10px;
+  }
+
+  .foto {
+    width: 130px;
+    height: 95px;
+  }
+
+  /* VISOR */
+  #visor img {
+    max-width: 95%;
+    max-height: 75%;
+  }
+
+}
