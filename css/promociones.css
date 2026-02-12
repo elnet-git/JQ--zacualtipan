@@ -1,0 +1,303 @@
+:root {
+  --guinda: #7B1E1E;
+  --guinda-osc: #5a1414;
+  --neon: #ff4d4d;
+  --neon-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon), 0 0 20px var(--neon);
+}
+
+/* ===== BODY ===== */
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: #f4f4f4;
+}
+
+/* ===== NAVBAR ===== */
+header.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--guinda);
+  padding: 10px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.45);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo img {
+  height: 64px;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: var(--neon-shadow);
+}
+
+/* NAV MENU */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  transition: max-height 0.35s ease;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+nav a.active {
+  background: var(--guinda-osc);
+  box-shadow: var(--neon-shadow);
+}
+
+nav a:hover {
+  transform: translateY(-2px);
+  background: var(--guinda-osc);
+  box-shadow: var(--neon-shadow);
+  color: var(--neon);
+}
+
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  height: 4px;
+  width: 100%;
+  background: #fff;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* RESPONSIVE NAV */
+@media(max-width: 900px) {
+  nav ul {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: var(--guinda);
+    flex-direction: column;
+    width: 200px;
+    max-height: 0;
+    overflow: hidden;
+    border-radius: 0 0 12px 12px;
+  }
+
+  nav ul.show {
+    max-height: 500px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* ===== PROMOCIONES ===== */
+.contenedor{
+  padding:40px 20px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+h2{
+  text-align:center;
+  color: var(--guinda);
+  margin-bottom:30px;
+  font-size:2rem;
+}
+
+.promociones{
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
+}
+
+.promo-item{
+  width:250px;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  cursor:pointer;
+  transition:0.3s;
+  text-align:center;
+}
+
+.promo-item:hover{
+  transform:translateY(-5px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+
+.promo-item img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+
+.promo-item h3{
+  margin:10px 0;
+  color: var(--guinda);
+}
+
+.promo-item p{
+  margin:0 10px 10px;
+  color:#333;
+  font-size:0.9rem;
+}
+
+.btn-volver{
+  display:inline-block;
+  padding:12px 25px;
+  background:#7a0a23;
+  color:white;
+  border-radius:10px;
+  text-decoration:none;
+  transition:.3s;
+  margin-top:25px;
+}
+
+.btn-volver:hover{
+  background:#a31132;
+}/* ================= PROMOCIONES ================= */
+
+.promo-card img{
+  width:60%;
+  border-radius:10px;
+  cursor:pointer;
+  transition:transform .25s ease;
+}
+
+/* === EXPANSIÓN PROMO (COMO VISOR PIZARRÓN) === */
+
+.promo-card img.expanded{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  max-width:90vw;
+  max-height:90vh;
+  width:auto;
+  height:auto;
+  z-index:1001;
+  border-radius:12px;
+  box-shadow:0 0 30px rgba(0,0,0,.6);
+
+  /* 🔴 evita parpadeo y cursor lupa */
+  pointer-events:auto;
+  cursor:default !important;
+  transition:none !important;
+}
+
+.promo-card img.expanded:hover{
+  transform:translate(-50%,-50%);
+}
+
+.promo-card:hover{
+  transform:translateY(-6px);
+}
+
+/* overlay oscuro promociones */
+#overlay-expanded{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  opacity:0;
+  pointer-events:none;
+  z-index:1000;
+  transition:opacity .2s;
+}
+
+#overlay-expanded.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+
+/* ================= PIZARRÓN ================= */
+
+.pizarron{
+  padding:40px 16px;
+  text-align:center;
+}
+
+.fotos{
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  flex-wrap:wrap;
+}
+
+.foto{
+  width:180px;
+  height:130px;
+  background:#fff;
+  padding:8px;
+  border-radius:8px;
+  box-shadow:0 8px 18px rgba(0,0,0,.6);
+  
+}
+
+.foto img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:6px;
+}
+
+
+/* ================= VISOR DE PIZARRÓN ================= */
+
+#visor{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.92);
+  z-index:2000;
+  align-items:center;
+  justify-content:center;
+}
+
+#visor img{
+  max-width:90vw;
+  max-height:90vh;
+  border-radius:12px;
+  box-shadow:0 0 30px rgba(0,0,0,.7);
+}

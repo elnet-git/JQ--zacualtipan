@@ -1,0 +1,244 @@
+
+  /* =================== VARIABLES =================== */
+  :root {
+    /* Colores generales del sitio */
+    --bg: #111;            /* Fondo principal oscuro de la página */
+    --panel: #121212;      /* Fondo de paneles y tarjetas grandes */
+    --card: #1b1b1b;       /* Fondo de tarjetas pequeñas */
+    --muted: #cfcfcf;      /* Color de texto secundario o apagado */
+
+    /* Colores estilo Bajaj */
+    --guinda: #0a4588;     /* Azul principal */
+    --guinda-2: #1039f0;   /* Azul secundario o para destacar */
+    --guinda-osc: #39ec21; /* Azul oscuro para hover o sombras */
+
+    /* Neón estilo Bajaj */
+    --neon: #00AEEF;       /* Color neón azul */
+    --neon-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon), 0 0 20px var(--neon);
+
+    --azul-marino: #0B1A33; /* Azul muy oscuro para fondos */
+    --shadow: 0 6px 18px rgba(0,0,0,.6); /* Sombra estándar para tarjetas y elementos */
+  }
+
+  /* =================== RESET GENERAL =================== */
+  * { box-sizing: border-box; } /* Todos los elementos toman el mismo box-sizing */
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: var(--bg); /* Fondo principal de la página */
+    color: #d31818;           /* Color principal del texto */
+    scroll-behavior: smooth; /* Scroll suave */
+    -webkit-font-smoothing: antialiased; /* Mejorar renderizado de fuentes */
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* =================== NEON SOFT =================== */
+  .neon-soft {
+    position: relative;
+    border-radius: 12px;  /* Bordes redondeados */
+    overflow: hidden;
+  }
+  .neon-soft::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    padding: 2px;
+    border-radius: inherit;
+    background: linear-gradient(45deg, var(--guinda), var(--guinda-2), var(--guinda));
+    background-size: 300%;
+    animation: neonSoftGlow 6s linear infinite; /* Animación de brillo suave */
+    z-index: -1;
+    opacity: .28;
+    filter: blur(6px); /* Difuminar para efecto glow */
+    pointer-events: none; /* No interfiere con clicks */
+  }
+  @keyframes neonSoftGlow {
+    0% { background-position: 0 0; }
+    50% { background-position: 200% 0; }
+    100% { background-position: 0 0; }
+  }
+
+  /* =================== NAVBAR =================== */
+header.navbar {
+  display: flex;
+  flex-direction: column;   /* 🔥 Logo arriba y menú abajo */
+  align-items: center;
+  background: var(--guinda);
+  padding: 20px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.45);
+}
+
+/* LOGO + TEXTO */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.logo img {
+  height: 100px;   /* 🔥 Más grande */
+  display: block;
+}
+
+/* TEXTO ZACUALTIPAN */
+.sucursal {
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* MENU */
+.navbar nav {
+  margin-top: 18px;   /* 🔥 Separa del logo */
+}
+
+.navbar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: background .2s ease;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  background: rgba(255,255,255,0.08);
+}
+
+
+  /* =================== SLIDER =================== */
+  .slider {
+    position: relative;
+    width: 100%;
+    height: 60vh; /* Altura del slider */
+    margin-top: 14px;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  .slider.neon-soft::before { opacity: .22; filter: blur(8px); }
+  .slide { display: none; position: absolute; inset: 0; }
+  .slide.active { display: block; animation: fadeIn .6s ease; }
+  .slide img { width: 100%; height: 100%; object-fit: cover; transform-origin: center; }
+  @keyframes fadeIn { from {opacity:0; transform: scale(1.02);} to {opacity:1; transform: scale(1);} }
+  .text {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    background: rgba(0,0,0,.45); /* Fondo semitransparente */
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    backdrop-filter: blur(4px); /* Efecto desenfoque */
+  }
+
+  /* =================== PROMOCIONES =================== */
+  .promociones { padding: 28px 16px; }
+  .promociones h2 { max-width: 1200px; margin: 0 auto 12px; color: var(--guinda-2); }
+  .promo-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap: 28px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .promo-card {
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border: 2px solid rgba(29,40,66,0.35);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .promo-card:hover { transform: translateY(-6px); }
+  .promo-card img { width: 60%; border-radius: 10px; cursor: pointer; transition: transform 0.25s ease; }
+  .promo-card img:not(.expanded):hover { transform: scale(1.05); }
+  .promo-card img.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    z-index: 2000;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0,0,0,.6);
+    cursor: zoom-out;
+    transition: none !important;
+  }
+
+  /* =================== PIZARRÓN =================== */
+  .pizarron {
+    padding: 40px 16px;
+    text-align: center;
+    border-top: 2px solid rgba(255,255,255,.03);
+    border-bottom: 2px solid rgba(255,255,255,.03);
+  }
+  .fotos { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+  .foto {
+    width: 180px; height: 130px; background: #fff; padding: 8px;
+    border-radius: 8px; box-shadow: 0 8px 18px rgba(0,0,0,.6);
+    transform: rotate(-2deg);
+    transition: transform .2s ease, box-shadow .2s ease;
+    cursor: pointer;
+  }
+  .foto img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; display: block; }
+  .foto:nth-child(even) { transform: rotate(2deg); }
+  .foto:hover { transform: scale(1.05) rotate(0); box-shadow: 0 18px 36px rgba(0,0,0,.22); }
+
+  /* =================== VISOR =================== */
+  #visor {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+  }
+  #visor img {
+    max-width: 92%;
+    max-height: 78%;
+    border-radius: 12px;
+    box-shadow: 0 0 36px rgba(0,0,0,0.8);
+    transition: transform .25s ease, opacity .18s ease;
+  }
+
+  /* =================== BOTONES WHATSAPP =================== */
+  .whatsapp-btn {
+    display: inline-block;
+    background-color: #25D366; /* verde WhatsApp */
+    color: white;
+    padding: 10px 16px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform .12s ease, box-shadow .2s ease;
+  }
+  .whatsapp-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  }

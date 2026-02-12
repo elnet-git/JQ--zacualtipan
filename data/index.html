@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JQ Motors | Refacciones & Servicio</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ===== PROXIMAMENTE ===== */
+    #proximamente {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+    }
+
+    #proximamente img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<!-- ===== PROXIMAMENTE ACTIVO ===== -->
+<div id="proximamente">
+  <img src="proximamente.jpg" alt="Próximamente en Zacualtipán">
+</div>
+<!-- ===== FIN PROXIMAMENTE ===== -->
+
+  <div id="overlay-expanded"></div>
+
+  <header class="navbar neon-soft">
+  
+  <div class="logo">
+    <img src="images/logo/logo.png" alt="Logo" onerror="this.style.display='none'">
+    <span class="sucursal">ZACUALTIPAN</span>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="catalogo.html">Catálogo</a></li>
+      <li><a href="promociones.html">Promociones</a></li>
+      <li><a href="pizarron.html">Pizarrón</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#ubicacion">Ubicación</a></li>
+      <li><a href="#intranet">Intranet</a></li>
+    </ul>
+  </nav>
+
+</header>
+
+
+
+  <!-- ====== SLIDER PRINCIPAL ====== -->
+  <section id="inicio" class="slider neon-soft" aria-label="Slider principal">
+    
+
+    <div class="slide active"><img src="images/portada/slide1.jpg" alt="Slide 1"></div>
+    <div class="slide"><img src="images/portada/n250.jpg" alt="N250"></div>
+    <div class="slide"><img src="images/portada/ns200.jpg" alt="NS200"></div>
+    <div class="slide"><img src="images/portada/dominar400.jpg" alt="Dominar 400"></div>
+
+    <div class="text">Refacciones y servicio — JQ Motors</div>
+  </section>
+
+  <!-- overlay para ampliar imágenes -->
+  <div id="overlay-expanded"></div>
+
+  <!-- ====== PROMOCIONES ====== -->
+  <section class="promociones">
+    <h2>Promociones Especiales</h2>
+
+    <div class="promo-container">
+      <div class="promo-card neon-soft">
+        <img src="images/promociones/promo1.jpg" alt="promo1" />
+        <h3>Descuento en refacciones</h3>
+        <p class="precio">DE $630 A $500 MXN</p>
+      </div>
+
+      <div class="promo-card neon-soft">
+        <img src="images/promociones/52DT0468.jpg" alt="promo2" />
+        <h3>Colín RS200 blanco</h3>
+        <p class="precio">Nuevo</p>
+      </div>
+
+      <div class="promo-card neon-soft">
+        <img src="images/promociones/Portaplaca.jpg" alt="promo3" />
+        <h3>Portaplaca</h3>
+        <p class="precio">$200 MXN</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== PIZARRÓN ====== -->
+  <section id="recuerdos" class="pizarron">
+    <h2>Pizarrón de Clientes</h2>
+    <p>Haz clic en una foto para ampliarla.</p>
+
+    <div class="fotos">
+      <div class="foto neon-soft" onclick="abrirVisor(0)">
+        <img src="images/pizarron/pizarron1.jpg" alt="">
+      </div>
+
+      <div class="foto neon-soft" onclick="abrirVisor(1)">
+        <img src="images/pizarron/pizarron2.jpg" alt="">
+      </div>
+
+      <div class="foto neon-soft" onclick="abrirVisor(2)">
+        <img src="images/pizarron/pizarron3.jpg" alt="">
+      </div>
+    </div>
+
+    <br>
+
+    <a class="neon-soft" href="pizarron.html" target="_blank"
+       style="display:inline-block;margin-top:15px;padding:12px 24px;background:#7B1E1E;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;font-size:18px;">
+      GALERÍA COMPLETA
+    </a>
+  </section>
+
+  <!-- VISOR DEL PIZARRÓN -->
+  <div id="visor" class="neon-soft">
+    <img id="visor-img" src="">
+    <div class="flechas">
+      <button class="flecha-btn" onclick="cambiarFoto(-1)">&#10094;</button>
+      <button class="flecha-btn" onclick="cambiarFoto(1)">&#10095;</button>
+    </div>
+
+    <a href="pizarron.html" target="_blank"
+       style="margin-top:20px;padding:12px 26px;background:#A83434;color:white;font-weight:700;border-radius:10px;text-decoration:none;font-size:18px;">
+      GALERÍA
+    </a>
+
+    <button onclick="cerrarVisor()"
+      style="margin-top:15px;background:#333;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:16px;cursor:pointer;">
+      Cerrar
+    </button>
+  </div>
+
+  <!-- QUIÉNES SOMOS -->
+  <section id="nosotros">
+    <h2>Quiénes Somos</h2>
+    <div class="card neon-soft">
+      <p><b>JQ Motors</b> ofrecemos refacciones y servicio profesional para motociclistas.</p>
+      <p>Apasionados por la calidad, la seguridad y el buen servicio.</p>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <h2>Servicios</h2>
+    <div class="grid-4">
+      <div class="card neon-soft"><h3>Servicio de Taller</h3><p>Afinaciones y mantenimiento.</p></div>
+      <div class="card neon-soft"><h3>Refacciones Originales</h3><p>Línea completa Bajaj.</p></div>
+      <div class="card neon-soft"><h3>Diagnóstico</h3><p>Revisión profesional.</p></div>
+      <div class="card neon-soft"><h3>Eléctrico</h3><p>Reparación de fallas.</p></div>
+    </div>
+  </section>
+
+  <!-- UBICACIÓN -->
+<section id="ubicacion">
+  <h2 id="titulo-ubicacion">Ubicación</h2>
+
+  <div class="mapa-pro neon-soft">
+    <iframe
+      src="https://www.google.com/maps?q=20.659129,-98.657234&hl=es&z=16&output=embed"
+      width="100%"
+      height="350"
+      style="border:0;border-radius:12px;"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+  </div>
+</section>
+
+
+
+  <!-- INTRANET -->
+  <section id="intranet">
+    <h2>Acceso a Intranet</h2>
+
+    <div class="card neon-soft" style="max-width:400px;margin:auto;text-align:center;">
+      <input id="user" placeholder="Usuario"
+        style="width:100%;padding:12px;border-radius:10px;margin-bottom:10px;border:none;background:#222;color:#eee;">
+      <input id="pass" type="password" placeholder="Contraseña"
+        style="width:100%;padding:12px;border-radius:10px;margin-bottom:10px;border:none;background:#222;color:#eee;">
+
+      <button onclick="login()"
+        style="padding:12px 18px;background:#7B1E1E;color:white;border:none;border-radius:10px;font-weight:700;">
+        Entrar
+      </button>
+
+      <p id="msg" style="color:#f55;margin-top:10px;"></p>
+    </div>
+  </section>
+
+  <footer class="neon-soft"> 
+    <p style="margin:4px;color:#bbb;font-weight:600">¿Necesitas ayuda? Contáctanos por WhatsApp:</p> 
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:10px"> 
+      <a class="whatsapp-btn neon-soft" href="https://wa.me/5217716978347" target="_blank">Refacciones</a> 
+      <a class="whatsapp-btn neon-soft" href="https://wa.me/5215517263228" target="_blank">Taller</a> 
+      <a class="whatsapp-btn neon-soft" href="https://wa.me/5217717210673" target="_blank">Ventas</a> 
+    </div> 
+    <p style="margin-top:12px;color:#666;font-size:12px">© JQ Motors</p> 
+  </footer> 
+
+  <script src="js/app.js"></script>
+</body>
+</html>

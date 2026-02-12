@@ -4,668 +4,109 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>JQ Motors | Refacciones & Servicio</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 
   <style>
-    /* ===========================================================
-       🔥 EFECTO NEÓN SUAVE (para cualquier elemento)
-       — versión más pequeña y discreta que el mapa
-       — NO afecta tamaño ni distorsiona
-    =========================================================== */
-    .neon-soft {
-        position: relative;
-        border-radius: 12px;
-        overflow: hidden;
-    }
+    /* ===== HERO PROXIMAMENTE ===== */
 
-    .neon-soft::before {
-        content: "";
-        position: absolute;
-        inset: -2px;
-        padding: 2px;
-        border-radius: inherit;
-        background: linear-gradient(45deg, #7B1E1E, #A83434, #7B1E1E);
-        background-size: 300%;
-        animation: neonSoftGlow 6s linear infinite;
-        z-index: -1;
-        opacity: .28; /* más suave */
-        filter: blur(6px);
-        pointer-events: none;
-    }
-
-    @keyframes neonSoftGlow {
-        0%   { background-position: 0 0; }
-        50%  { background-position: 200% 0; }
-        100% { background-position: 0 0; }
-    }
-
-    /* ====== VARIABLES Y RESET ====== */
-    :root{
-      --bg:#111;
-      --panel:#121212;
-      --card:#1b1b1b;
-      --muted:#cfcfcf;
-      --guinda:#7B1E1E;
-      --guinda-2:#A83434;
-      --azul-marino:#0B1A33;
-      --shadow:0 6px 18px rgba(0,0,0,.6);
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:'Montserrat',sans-serif;
-      background:var(--bg);
-      color:#eee;
-      scroll-behavior:smooth;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    /* ---------- NAVBAR ---------- */
-    header.navbar {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:var(--guinda);
-      padding:10px 18px;
-      position:sticky;
-      top:0;
-      z-index:1100;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.45);
-    }
-    .logo{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .logo img{
-      height:64px;
-      display:block;
-    }
-    .logo h1{
-      margin:0;
-      font-size:1rem;
-      color:#fff;
-      letter-spacing:1px;
-    }
-    .navbar nav ul{
-      list-style:none;
-      display:flex;
-      gap:12px;
-      margin:0;
-      padding:0;
-      align-items:center;
-    }
-    .navbar a{
-      color:#fff;
-      text-decoration:none;
-      font-weight:700;
-      padding:8px 12px;
-      border-radius:8px;
-    }
-    .navbar a:hover,
-    .navbar a.active{
-      background:rgba(255,255,255,0.06);
-    }
-
-    /* ---------- SLIDER ---------- */
-    .slider {
+    .hero-proximamente {
       position: relative;
       width: 100%;
-      height: 60vh;
-      margin-top: 14px;
+      height: 85vh;
       overflow: hidden;
-      border-radius:12px;
-    }
-    .slider.neon-soft::before { opacity:.22; filter: blur(8px); } /* softer glow on slider */
-    .slide{
-      display:none;
-      position:absolute;
-      inset:0;
-    }
-    .slide.active{
-      display:block;
-      animation: fadeIn .6s ease;
-    }
-    .slide img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      transform-origin:center;
-    }
-    @keyframes fadeIn {
-      from {opacity:0; transform: scale(1.02);}
-      to {opacity:1; transform: scale(1);}
-    }
-    .text{
-      position:absolute;
-      bottom:18px;
-      left:18px;
-      background:rgba(0,0,0,.45);
-      padding:8px 14px;
-      border-radius:8px;
-      color:#fff;
-      font-weight:600;
-      backdrop-filter: blur(4px);
     }
 
-    /* ---------- PROMOCIONES ---------- */
-    .promociones{
-      padding:28px 16px;
-    }
-    .promociones h2{
-      max-width:1200px;
-      margin:0 auto 12px;
-      color:var(--guinda-2);
-    }
-    .promo-container{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:28px;
-      max-width:1000px;
-      margin:0 auto;
-    }
-    .promo-card{
-      background:var(--panel);
-      border-radius:14px;
-      padding:18px;
-      box-shadow:var(--shadow);
-      text-align:center;
-      border:2px solid rgba(29,40,66,0.35);
-      transition:transform .18s ease, box-shadow .18s ease;
-    }
-    .promo-card:hover{
-      transform:translateY(-6px);
-    }
-    .promo-card img{
-      width:60%;
-      border-radius:10px;
-      cursor:pointer;
-      transition:transform .25s ease;
-    }
-    .promo-card img.expanded{
-      transform:scale(3.1);
-      z-index:1001;
-    }
-    #overlay-expanded{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.65);
-      z-index:1000;
-    }
-    #overlay-expanded.active{
-      display:block;
+    .hero-proximamente img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.5);
+      animation: zoomHero 10s ease-in-out infinite alternate;
     }
 
-    /* ---------- PIZARRÓN ---------- */
-    .pizarron {
-        padding: 40px 16px;
-        text-align: center;
-        border-top: 2px solid rgba(255,255,255,.03);
-        border-bottom: 2px solid rgba(255,255,255,.03);
-    }
-
-    .fotos {
-      display:flex;
-      justify-content:center;
-      gap:25px;
-      flex-wrap:wrap;
-    }
-
-    .foto {
-        width: 180px;
-        height: 130px;
-        background: #fff;
-        padding: 8px;
-        border-radius: 8px;
-        box-shadow: 0 8px 18px rgba(0,0,0,.6);
-        transform: rotate(-2deg);
-        transition: transform .2s ease, box-shadow .2s ease;
-        cursor: pointer;
-    }
-
-    .foto img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      border-radius:6px;
-      display:block;
-    }
-
-    .foto:nth-child(even) {
-        transform: rotate(2deg);
-    }
-
-    .foto:hover {
-        transform: scale(1.05) rotate(0);
-        box-shadow: 0 18px 36px rgba(123,30,30,0.22);
-    }
-
-    /* ---------- MAPA PRO JQ MOTORS ---------- */
-    .mapa-pro {
-        max-width: 900px;
-        margin: 50px auto;
-        padding: 20px;
-        background: #111;
-        border-radius: 18px;
-        position: relative;
-        box-shadow: 0 0 25px rgba(123, 30, 30, 0.45);
-        transition: transform .25s ease;
-        overflow: hidden;
-        border: 3px solid #7B1E1E;
-    }
-
-    .mapa-pro:hover {
-        transform: scale(1.01);
-        box-shadow: 0 0 40px rgba(168, 52, 52, 0.6);
-    }
-
-    .mapa-pro::before {
-        content: "";
-        position: absolute;
-        inset: -2px;
-        border-radius: 20px;
-        padding: 2px;
-        background: linear-gradient(45deg, #7B1E1E, #A83434, #7B1E1E);
-        background-size: 300%;
-        animation: glow 5s linear infinite;
-        z-index: -1;
-        opacity: .20;
-        filter: blur(6px);
-        pointer-events: none;
-    }
-
-    @keyframes glow {
-        0% { background-position: 0 0; }
-        50% { background-position: 200% 0; }
-        100% { background-position: 0 0; }
-    }
-
-    #titulo-ubicacion {
-        color: #A83434;
-        text-align: center;
-        font-size: 28px;
-        margin-bottom: 15px;
-    }
-
-    /* ---------- UTILS / SECCIONES ---------- */
-    section{
-      padding:50px 20px;
-      max-width:1200px;
-      margin:auto;
-    }
-    h2{color:#A83434;text-align:center;}
-
-    .card{
-      background:#121212;
-      padding:20px;
-      border-radius:12px;
-      box-shadow:0 6px 18px rgba(0,0,0,.55);
-      transition:transform .16s ease;
-    }
-    .card:hover{ transform:translateY(-6px); }
-
-    .grid-4{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:20px;
-    }
-
-    /* ---------- VISOR DE FOTOS ---------- */
-    #visor{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.92);
-      z-index:2000;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      padding:30px;
-    }
-    #visor img{
-      max-width:92%;
-      max-height:78%;
-      border-radius:12px;
-      box-shadow:0 0 36px rgba(0,0,0,0.8);
-      transition:transform .25s ease, opacity .18s ease;
-    }
-
-    .flechas{
-      display:flex;
-      justify-content:space-between;
-      width:90%;
-      max-width:900px;
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      pointer-events:none;
-    }
-    .flecha-btn{
-      pointer-events:auto;
-      background:#0008;
-      color:#fff;
-      border:none;
-      font-size:38px;
-      padding:8px 16px;
-      border-radius:8px;
-      cursor:pointer;
-      opacity:.92;
-    }
-
-    /* ---------- WHATSAPP BUTTON & FOOTER ---------- */
-    .whatsapp-btn {
-      display: inline-block;
-      background-color: #25D366;
+    .hero-texto {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
       color: white;
-      padding: 10px 16px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: transform .12s ease;
-    }
-    .whatsapp-btn:hover{ transform:translateY(-3px); }
-
-    footer {
-      padding:18px;
-      text-align:center;
-      border-top:1px solid rgba(255,255,255,.03);
-      margin-top:18px;
-      color:#bbb;
+      padding: 20px;
     }
 
-    /* responsive tweaks */
-    @media (max-width:900px){
-      .fotos{ gap:12px; }
-      .foto{ width:140px; height:100px; }
-      .promo-card img{ width:70%; }
-      .slider{ height:36vh; }
-      #visor img{ max-height:70%; }
+    .hero-texto h1 {
+      font-size: 4rem;
+      letter-spacing: 5px;
+      color: #00f0ff;
+      text-shadow: 0 0 25px rgba(0,240,255,0.8);
+      margin: 0;
     }
-    @media (max-width:600px){
-      .navbar nav ul{ display:none; } /* keep it simple on mobile; user likely has their own menu */
-      .logo img{ height:52px; }
-      section{ padding:28px 14px; }
-      .grid-4{ grid-template-columns:1fr; }
+
+    .hero-texto h2 {
+      font-size: 2rem;
+      margin-top: 10px;
+    }
+
+    .hero-texto p {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    @keyframes zoomHero {
+      from { transform: scale(1); }
+      to { transform: scale(1.08); }
+    }
+
+    @media (max-width: 768px) {
+      .hero-texto h1 { font-size: 2.5rem; }
+      .hero-texto h2 { font-size: 1.3rem; }
     }
   </style>
+
 </head>
 
 <body>
 
-  <!-- Overlay para promociones expand -->
-  <div id="overlay-expanded"></div>
-
-  <!-- ---------- NAVBAR (neon applied) ---------- -->
-  <header class="navbar neon-soft">
-    <div class="logo">
-      <img src="images/logo/logo.png" alt="Logo" onerror="this.style.display='none'">
-      <h1>JQ RODANDO MOMENTOS</h1>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="index.html" class="active">Inicio</a></li>
-        <li><a href="catalogo.html">Catálogo</a></li>
-        <li><a href="promociones.html">Promociones</a></li>
-        <li><a href="pizarron.html">Pizarrón</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#ubicacion">Ubicación</a></li>
-        <li><a href="#intranet">Intranet</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- ---------- SLIDER (neon around whole slider) ---------- -->
-  <section id="inicio" class="slider neon-soft" aria-label="Slider principal">
-    <div class="slide active"><img src="images/portada/slide1.jpg" alt="Slide 1"></div>
-    <div class="slide"><img src="images/portada/n250.jpg" alt="N250"></div>
-    <div class="slide"><img src="images/portada/ns200.jpg" alt="NS200"></div>
-    <div class="slide"><img src="images/portada/dominar400.jpg" alt="Dominar 400"></div>
-    <div class="text">Refacciones y servicio — JQ Motors</div>
-  </section>
-
-  <!-- ---------- PROMOCIONES ---------- -->
-  <section class="promociones">
-    <h2>Promociones Especiales</h2>
-    <div class="promo-container">
-      <div class="promo-card neon-soft">
-        <img src="images/promociones/promo1.jpg" alt="promo1" />
-        <h3>Descuento en refacciones</h3>
-        <p class="precio">DE $630 A $500 MXN</p>
-      </div>
-
-      <div class="promo-card neon-soft">
-        <img src="images/promociones/52DT0468.jpg" alt="promo2" />
-        <h3>Colín RS200 blanco</h3>
-        <p class="precio">Nuevo</p>
-      </div>
-
-      <div class="promo-card neon-soft">
-        <img src="images/promociones/Portaplaca.jpg" alt="promo3" />
-        <h3>Portaplaca n250</h3>
-        <p class="precio">$200 MXN</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---------- PIZARRÓN ---------- -->
-  <section id="recuerdos" class="pizarron">
-    <h2>BIENVENIDOS A LA FAMILIA BAJAJ</h2>
-    <p>Haz clic en una foto para ampliarla.</p>
-
-    <div class="fotos">
-      <div class="foto neon-soft" onclick="abrirVisor(0)" title="Ver foto 1">
-        <img src="images/pizarron/pizarron1.jpg" alt="Pizarron 1">
-      </div>
-
-      <div class="foto neon-soft" onclick="abrirVisor(1)" title="Ver foto 2">
-        <img src="images/pizarron/pizarron2.jpg" alt="Pizarron 2">
-      </div>
-
-      <div class="foto neon-soft" onclick="abrirVisor(2)" title="Ver foto 3">
-        <img src="images/pizarron/pizarron3.jpg" alt="Pizarron 3">
-      </div>
-    </div>
-
-    <br>
-    <a class="neon-soft" href="pizarron.html" target="_blank" style="display:inline-block;margin-top:15px;padding:12px 24px;background:#7B1E1E;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;font-size:18px;">
-      GALERÍA COMPLETA
-    </a>
-  </section>
-
-  <!-- ---------- VISOR DE FOTO GRANDE (neon applied) ---------- -->
-  <div id="visor" class="neon-soft" role="dialog" aria-hidden="true">
-    <img id="visor-img" src="" alt="Vista ampliada">
-    <div class="flechas" aria-hidden="true">
-      <button class="flecha-btn" onclick="cambiarFoto(-1)" aria-label="Anterior">&#10094;</button>
-      <button class="flecha-btn" onclick="cambiarFoto(1)" aria-label="Siguiente">&#10095;</button>
-    </div>
-
-    <a href="pizarron.html" target="_blank" style="margin-top:20px;padding:12px 26px;background:#A83434;color:white;font-weight:700;border-radius:10px;text-decoration:none;font-size:18px;">
-      GALERÍA
-    </a>
-
-    <button onclick="cerrarVisor()" style="margin-top:15px;background:#333;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:16px;cursor:pointer;">
-      Cerrar
-    </button>
+<header class="navbar neon-soft">
+  
+  <div class="logo">
+    <img src="images/logo/logo.png" alt="Logo" onerror="this.style.display='none'">
+    <span class="sucursal">ZACUALTIPAN</span>
   </div>
 
-  <!-- ============================================================
-       NUEVA SECCIÓN — NOSOTROS
-  ============================================================ -->
-  <section id="nosotros">
-    <h2>Quiénes Somos</h2>
-    <div class="card neon-soft">
-      <p>En <b>JQ Motors</b> ofrecemos refacciones y servicio profesional para motociclistas.</p>
-      <p>Apasionados por la calidad, la seguridad y el buen servicio.</p>
-    </div>
-  </section>
+  
 
-  <!-- ============================================================
-       NUEVA SECCIÓN — SERVICIOS
-  ============================================================ -->
-  <section id="servicios">
-    <h2>Servicios</h2>
-    <div class="grid-4">
-      <div class="card neon-soft"><h3>Servicio de Taller</h3><p>Afinaciones y mantenimiento.</p></div>
-      <div class="card neon-soft"><h3>Refacciones Originales</h3><p>Línea completa Bajaj.</p></div>
-      <div class="card neon-soft"><h3>Diagnóstico</h3><p>Revisión profesional.</p></div>
-      <div class="card neon-soft"><h3>Eléctrico</h3><p>Reparación de fallas.</p></div>
-    </div>
-  </section>
+<!-- ===== HERO PROXIMAMENTE ===== -->
+<section id="inicio" class="hero-proximamente">
 
-  <!-- ============================================================
-       SECCIÓN — UBICACIÓN PRO (MAPA REAL)
-  ============================================================ -->
-  <section id="ubicacion">
-    <h2 id="titulo-ubicacion">Ubicación</h2>
+  <img src="proximamente.jpg" alt="Próximamente en Zacualtipán">
 
-    <div class="mapa-pro neon-soft" aria-label="Mapa de nuestra ubicación">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d936.9154827537378!2d-98.78913760185243!3d20.064598296054314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d10a073246f5f3%3A0x13c1da411d733e7!2sBajaj%20Pachuca%20Matriz!5e0!3m2!1ses-419!2smx!4v1765240352165!5m2!1ses-419!2smx"
-        width="100%"
-        height="350"
-        style="border:0;border-radius:12px;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-    </div>
-  </section>
+  <div class="hero-texto">
+    <h1>PRÓXIMAMENTE</h1>
+    <h2>EN ZACUALTIPÁN</h2>
+    <p>La nueva experiencia en refacciones y servicio motociclista.</p>
+  </div>
 
-  <!-- ============================================================
-       NUEVA SECCIÓN — INTRANET (LOGIN)
-  ============================================================ -->
-  <section id="intranet">
-    <h2>Acceso a Intranet</h2>
+</section>
 
-    <div class="card neon-soft" style="max-width:400px;margin:auto;text-align:center;">
-      <input id="user" placeholder="Usuario" style="width:100%;padding:12px;border-radius:10px;margin-bottom:10px;border:none;background:#222;color:#eee;">
-      <input id="pass" type="password" placeholder="Contraseña" style="width:100%;padding:12px;border-radius:10px;margin-bottom:10px;border:none;background:#222;color:#eee;">
 
-      <button onclick="login()" style="padding:12px 18px;background:#7B1E1E;color:white;border:none;border-radius:10px;font-weight:700;">Entrar</button>
 
-      <p id="msg" style="color:#f55;margin-top:10px;"></p>
-    </div>
-  </section>
+<!-- ===== UBICACIÓN ===== -->
+<section id="ubicacion">
+  <h2 id="titulo-ubicacion">Ubicación</h2>
 
-  <!-- ============================================================
-       FOOTER
-  ============================================================ -->
-  <footer class="neon-soft">
-    <p style="margin:4px;color:#bbb;font-weight:600">¿Necesitas ayuda? Contáctanos por WhatsApp:</p>
-    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:10px">
-      <a class="whatsapp-btn neon-soft" href="https://wa.me/5217716978347" target="_blank" style="text-decoration:none">Refacciones</a>
-      <a class="whatsapp-btn neon-soft" href="https://wa.me/5215517263228" target="_blank" style="text-decoration:none">Taller</a>
-      <a class="whatsapp-btn neon-soft" href="https://wa.me/5217717210673" target="_blank" style="text-decoration:none">Ventas</a>
-    </div>
-    <p style="margin-top:12px;color:#666;font-size:12px">© JQ Motors</p>
-  </footer>
+  <div class="mapa-pro neon-soft">
+    <iframe
+      src="https://www.google.com/maps?q=20.659129,-98.657234&hl=es&z=16&output=embed"
+      width="100%"
+      height="350"
+      style="border:0;border-radius:12px;"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+  </div>
+</section>
 
-  <!-- ============================================================
-       SCRIPTS FINALES
-  ============================================================ -->
-
-  <!-- Slider automático -->
-  <script>
-  (function(){
-    const slides = document.querySelectorAll('.slide');
-    let idx = 0;
-    if (!slides.length) return;
-    setInterval(()=>{
-      slides[idx].classList.remove('active');
-      idx = (idx + 1) % slides.length;
-      slides[idx].classList.add('active');
-    },4000);
-  })();
-  </script>
-
-  <!-- Expansión imágenes de promociones -->
-  <script>
-  const overlay = document.getElementById("overlay-expanded");
-
-  document.querySelectorAll(".promo-card img").forEach(img => {
-    img.addEventListener("click", (e) => {
-      e.stopPropagation();
-      img.classList.toggle("expanded");
-      overlay.classList.toggle("active");
-    });
-  });
-
-  if (overlay) {
-    overlay.addEventListener("click", () => {
-      document.querySelectorAll(".promo-card img.expanded").forEach(img => img.classList.remove("expanded"));
-      overlay.classList.remove("active");
-    });
-  }
-  </script>
-
-  <!-- VISOR DE FOTOS DEL PIZARRÓN -->
-  <script>
-  const fotos = [
-    "images/pizarron/pizarron1.jpg",
-    "images/pizarron/pizarron2.jpg",
-    "images/pizarron/pizarron3.jpg"
-  ];
-
-  let fotoActual = 0;
-
-  function abrirVisor(index){
-    fotoActual = index;
-    const visor = document.getElementById("visor");
-    const visorImg = document.getElementById("visor-img");
-    if(!visor || !visorImg) return;
-    visorImg.src = fotos[fotoActual];
-    visor.style.display = "flex";
-    visor.setAttribute('aria-hidden','false');
-  }
-
-  function cerrarVisor(){
-    const visor = document.getElementById("visor");
-    if(!visor) return;
-    visor.style.display = "none";
-    visor.setAttribute('aria-hidden','true');
-  }
-
-  function cambiarFoto(dir){
-    fotoActual = (fotoActual + dir + fotos.length) % fotos.length;
-    const visorImg = document.getElementById("visor-img");
-    if(visorImg) visorImg.src = fotos[fotoActual];
-  }
-
-  // Cerrar visor con tecla Esc
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') cerrarVisor();
-    if(e.key === 'ArrowLeft') cambiarFoto(-1);
-    if(e.key === 'ArrowRight') cambiarFoto(1);
-  });
-
-  // Cerrar al click fuera de la imagen
-  document.getElementById('visor')?.addEventListener('click', function(e){
-    if(e.target.id === 'visor' || e.target.id === 'visor-img') {
-      // click on background or image does nothing (we only close with button/esc)
-      return;
-    }
-  });
-  </script>
-
-  <!-- LOGIN INTRANET -->
-  <script>
-  function login(){
-    const u = document.getElementById("user").value.trim();
-    const p = document.getElementById("pass").value.trim();
-
-    if(u === "admin" && p === "1234"){
-      window.location.href = "catalogo.html";
-    } else {
-      document.getElementById("msg").textContent = "Acceso denegado.";
-    }
-  }
-  </script>
-
-</body>
-</html>
